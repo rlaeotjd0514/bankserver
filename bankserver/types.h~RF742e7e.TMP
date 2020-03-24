@@ -1,0 +1,149 @@
+#pragma once
+#include <vector>
+#include <string>
+#include <sstream>
+#include <WinSock2.h>
+#include <ctime>
+#include <chrono>
+#include <cstdlib>
+
+using namespace std;
+
+namespace bank_info_type {
+	class transaction {
+		tspinfo tsinfo;
+		enum class t_type { send, receive, change_status};
+		t_type transaction_type;
+		cspinfo sender_ip;
+		cspinfo receive_ip;		
+		date transaction_time;
+		sockaddr_in location;		
+		date transaction_time;
+		unsigned long long amount;
+
+		transaction(transaction::t_type type, cspinfo s, cspinfo r, unsigned long long amount, sockaddr_in loc) {			
+  			transaction_type = type;
+			sender_ip = s;
+			receive_ip = r;
+			this->amount = amount;
+			this->location = loc;
+		}
+	};
+
+	class account {
+	private:
+		cspinfo csinfo;
+		individual_info ip_info;
+		unsigned long long balance;
+		enum class account_level { root, administrator, worker, customer };
+		enum class account_state { active, banned };
+		enum class account_credit { prime, secondary, tiertiary, bad_credit };
+		account_level level;
+		account_state status;
+		account_credit credit;
+	public:		
+		account(unsigned long long balance, individual_info private_info, account::account_level level, account::account_credit credit) {		
+			ip_info = private_info;
+			this->balance = balance;
+			this->level = level;
+			this->credit = credit;
+		}
+	};
+
+	class individual_info {
+		wchar_t name[10];
+		date birth;
+		enum class gender  { male, female };
+		gender gender;
+		vector<string> contact_list;
+	};
+
+	class date {
+		unsigned int year;
+		unsigned int month;
+		unsigned int day;
+		unsigned short hour;
+		unsigned short minute;
+		unsigned short second;		
+	};
+
+	class cspinfo {
+	private:
+		unsigned long csid;
+		string cspass;
+		char rpool[63] =
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+			"abcdefghijklmnopqrstuvwxyz"
+			"0123456789";
+		const int passsize = 26;
+	public:
+		bool operator == (cspinfo& cspinfo_p) {
+			if (cspinfo_p.csid == this->csid && cspinfo_p.cspass == this->cspass) return true;
+			else return false;
+		}
+
+		bool operator == (string& cspinfo_s) {
+			stringstream strstream;
+			strstream << this->csid;			
+			string cspstring;
+			strstream >> cspstring;						
+			if (cspstring + this->cspass == cspinfo_s) return true;
+			else return false;
+		}				
+
+		cspinfo& operator = (cspinfo& cspinfo_p) {
+			this->csid = cspinfo_p.csid;
+			this->cspass = cspinfo_p.cspass;
+		}
+
+		cspinfo() {
+			string pass;
+			srand(time(0));
+			this->csid = rand() % LONG_MAX;
+			for (int i = 0; i < passsize; i++) {
+				pass += rpool[rand() % sizeof(rpool)];
+			}
+			this->cspass = pass;			
+		}		
+	};
+
+	class tspinfo {
+	private:
+		unsigned long tsid;
+		string tspass;
+		char rpool[63] =
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+			"abcdefghijklmnopqrstuvwxyz"
+			"0123456789";
+		const int passsize = 26;
+	public:
+		bool operator == (tspinfo& tspinfo_p) {
+			if (tspinfo_p.tsid == this->tsid && tspinfo_p.tspass == this->tspass) return true;
+			else return false;
+		}
+
+		bool operator == (string& tspinfo_s) {
+			stringstream strstream;
+			strstream << this->tsid;
+			string tspstring;
+			strstream >> tspstring;
+			if (tspstring + this->tspass == tspinfo_s) return true;
+			else return false;
+		}
+
+		tspinfo& operator = (tspinfo& tspinfo_p) {
+			this->tsid = tspinfo_p.tsid;
+			this->tspass = tspinfo_p.tspass;
+		}
+
+		tspinfo() {
+			string pass;
+			srand(time(0));
+			this->tsid = rand() % LONG_MAX;
+			for (int i = 0; i < passsize; i++) {
+				pass += rpool[rand() % sizeof(rpool)];
+			}
+			this->tspass = pass;
+		}
+	};
+}
