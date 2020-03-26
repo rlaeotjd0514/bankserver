@@ -19,21 +19,26 @@ void debug_test(string ds) {
 }
 
 void session_test() {
-	session(0, cspinfo(1, "abcdefghijkemnopqrstuvwxyz"), 0, 5);
+	cspinfo * private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
+	session s1(0, private_key, 0, 5);
 	cout << "return to main" << endl;
+	cout << (s1.check_session_validation() ? "true" : "false") << endl;		
+	std::this_thread::sleep_for(std::chrono::seconds(10));
+	auto ret = s1.check_session_validation();
+	cout << (ret ? "true" : "false") << endl;
 }
 
-int main() {
+void c_test() {
 	/*boost::asio::io_service io;
 	boost::asio::io_context io2;
 	boost::asio::deadline_timer t(io, boost::posix_time::seconds(5));
 	boost::asio::steady_timer t2(io, std::chrono::seconds(5));
 	t2.async_wait([&t2](boost::system::error_code  e) {
-		cout << "5 seconds passed" << endl;		
+		cout << "5 seconds passed" << endl;
 	});
 	io.run();
 	io2.run();
-	tcp::acceptor accepctor(io2, tcp::endpoint(tcp::v4(), 1313));	
+	tcp::acceptor accepctor(io2, tcp::endpoint(tcp::v4(), 1313));
 	for (;;) {
 		tcp::socket socket(io2);
 		cout << "waiting connection at " << accepctor.local_endpoint().address().to_string() << ":" << accepctor.local_endpoint().port() << endl;
@@ -46,10 +51,9 @@ int main() {
 		socket.shutdown(boost::asio::socket_base::shutdown_type::shutdown_both, igcode);
 	}
 	cout << sizeof(chrono::time_point<system_clock>) << endl;	*/
-	session_test();
-	io_service io;
-	steady_timer st(io, std::chrono::seconds(10));
-	st.async_wait([&st](boost::system::error_code e) {});
-	io.run();
-	return 0;
+}
+
+int main() {	
+	session_test();	
+	return 0; 
 }
