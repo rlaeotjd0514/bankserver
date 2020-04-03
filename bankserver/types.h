@@ -12,7 +12,7 @@ using namespace std::chrono;
 
 namespace bank_info_type {	
 	///날짜
-	class date {
+	struct date {		
 		unsigned short year;
 		unsigned short month;
 		unsigned short day;
@@ -54,7 +54,7 @@ namespace bank_info_type {
 
 		cspinfo() {
 			string pass;
-			srand(time(0));
+			srand((unsigned int)time(0));
 			this->csid = rand() % LONG_MAX;
 			for (int i = 0; i < passsize; i++) {
 				pass += rpool[rand() % sizeof(rpool)];
@@ -100,13 +100,11 @@ namespace bank_info_type {
 			this->tspass = tspinfo_p.tspass;
 		}
 
-		tspinfo(const tspinfo& t_) {
-			throw new exception("ERROR::CAN NOT COPY TSPINFO INSTANCE");
-		}
+		tspinfo(const tspinfo& t_) = delete;
 
 		tspinfo() {
 			string pass;
-			srand(time(0));
+			srand((unsigned int)time(0));
 			this->tsid = rand() % ULONG_MAX;
 			for (int i = 0; i < passsize; i++) {
 				pass += rpool[rand() % sizeof(rpool)];
@@ -155,9 +153,9 @@ namespace bank_info_type {
 	};
 
 	///개인정보 :=>계정
-	class individual_info {
+	struct individual_info {
 		wchar_t name[10];
-		date birth;
+		date birth{ 0, 0, 0, 0, 0, 0 };
 		enum class gender { male, female };
 		gender gender;
 		vector<string> contact_list;

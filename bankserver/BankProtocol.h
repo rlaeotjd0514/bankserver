@@ -98,7 +98,7 @@ namespace bank_network_methods {
 		uint8_t* res = (uint8_t*)malloc(len);
 		unsigned short offset;
 		for (offset = 0; offset < len; offset += 4) {
-			res[offset] = (uint8_t)(*(uint32_t*)(buffer + offset) ^ SGMK_BE);
+			res[offset] = *(uint32_t*)(buffer + offset) ^ SGMK_BE;
 		}
 		return res;
 	}

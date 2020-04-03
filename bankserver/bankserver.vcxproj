@@ -130,6 +130,8 @@
     <ClInclude Include="BankProtocol.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="session.h" />
+    <ClInclude Include="session_pool.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="boostTEST.cpp" />
     <ClCompile Include="session.cpp" />
+    <ClCompile Include="session_pool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

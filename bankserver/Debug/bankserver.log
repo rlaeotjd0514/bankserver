@@ -3,6 +3,7 @@
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
-C:\Users\31337\source\repos\bankserver\bankserver\types.h(57,14): warning C4244:  '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\31337\source\repos\bankserver\bankserver\types.h(109,14): warning C4244:  '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  session.cpp
+  session_pool.cpp
+  코드를 생성하고 있습니다...
   bankserver.vcxproj -> C:\Users\31337\source\repos\bankserver\Debug\bankserver.exe
