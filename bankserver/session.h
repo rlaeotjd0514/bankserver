@@ -19,6 +19,9 @@ public :
 	void change_validation() noexcept;
 	bool check_session_validation() const;
 	void start_session_clock();
+	void reset_session_clock();
+	void expire_session();
+	void add_session_time(int at);
 	~session() {}
 private:
 	bool session_expr;

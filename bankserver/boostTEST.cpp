@@ -31,7 +31,11 @@ void session_pool_test() {
 	cspinfo* private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
 	session s1(0, private_key, 0, 5);
 	sp.add_session(s1);
-	sp.session_start();
+	cout << (s1.check_session_validation() ? "true" : "false") << endl;
+	sp.session_start();	
+	cout << (s1.check_session_validation() ? "true" : "false") << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(10));
+	cout << (s1.check_session_validation() ? "true" : "false") << endl;
 }
 
 void c_test() {
@@ -60,6 +64,7 @@ void c_test() {
 }
 
 int main() {	
-	session_pool_test();	
+	session_pool_test();
+	cout << "return to main" << endl;
 	return 0; 
 }
