@@ -11,7 +11,7 @@ session::session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint3
 	current_customer(*csp_),
 	expire_time(expire_time_),
 	current_pool(nullptr),
-	session_timer(HI_timer::deadline, 5, (long long)0,
+	session_timer(HI_timer::timer_type::deadline, expire_time_, (long long)0,
 		[&]() {
 			this->change_validation();
 			cout << "session have expired" << endl;			
@@ -21,7 +21,7 @@ session::session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint3
 }
 
 void session::start_session_clock() {
-	this->session_timer.start();
+	this->session_timer.start(&(this->session_timer));
 }
 
 void session::reset_session_clock() {

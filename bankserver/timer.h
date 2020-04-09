@@ -1,14 +1,23 @@
+/*
+1. 특정 시간 이후에 콜백 함수 호출
+2. 정해진 시간이 지나기 전에 인터럽 가능
+3. 타이머가 동작하는 중에 남은 시간 수정 가능
+수정사항::
+대기시간의 단위를 작게하면 반복문을 도는 횟수가 많아져 설정한 시간보다 오래대기함 추후 타이머 클래스 재작성 필요
+*/
 #pragma once
 #include <functional>
 #include <mutex>
 #include <future>
 #include <iostream>
+#include <time.h>
+#include <Windows.h>
 
 using namespace std;
 
 class HI_timer {
 private:
-	enum timer_type{ deadline, event };	
+	enum class timer_type{ deadline, event };	
 	thread thd;
 	future<void> fobj;
 	promise<void> exit_signal;
@@ -22,7 +31,7 @@ private:
 	friend class session;
 public :		
 	mutex mtx;
-	HI_timer(timer_type type_, uint8_t lt, uint16_t duration_, function<void(void)> dcallback_, function<void(void)> ecallback_)://void(*dcallback_)(void), void(*ecallback_)(void)) :
+	HI_timer(timer_type type_, uint32_t lt, uint16_t duration_, function<void(void)> dcallback_, function<void(void)> ecallback_)://void(*dcallback_)(void), void(*ecallback_)(void)) :
 		left_time(lt),
 		valid(true),
 		dcallback(dcallback_),
@@ -33,40 +42,41 @@ public :
 		
 	}
 
-	void start() {		
+	void start(HI_timer * self) {		
 		auto& ths = *this;			
-		auto& fobj_ = fobj = exit_signal.get_future();
-		thd = thread([ths, &fobj_]() {
-			while (ths.left_time > 0) {											
-				if (ths.current_type == timer_type::event) {
+		thd = thread([ths](HI_timer * self_) {			
+			future<void> fobj_ = self_->exit_signal.get_future();
+			while (self_->left_time > 0 && fobj_.wait_for(chrono::seconds(1)) == future_status::timeout) {				
+				/*if (ths.current_type == timer_type::event) {
 					if (ths.left_time > ths.duration) {
 						const_cast<HI_timer&>(ths).mtx.lock();
 						const_cast<HI_timer&>(ths).left_time -= ths.duration;
 						const_cast<HI_timer&>(ths).mtx.unlock();
 					}
 					else {
-						std::this_thread::sleep_for(std::chrono::seconds(ths.left_time % ths.duration));
+						std::this_thread::sleep_for(std::chrono::milliseconds(ths.left_time % ths.duration));
 						const_cast<HI_timer&>(ths).mtx.lock();
 						const_cast<HI_timer&>(ths).left_time = 0;
 						const_cast<HI_timer&>(ths).mtx.unlock();
 						break;
 					}
-					std::this_thread::sleep_for(std::chrono::seconds(ths.duration));
+					std::this_thread::sleep_for(std::chrono::milliseconds(ths.duration));
 					ths.ecallback();
-				}
-				else {
-					const_cast<HI_timer&>(ths).mtx.lock();
-					const_cast<HI_timer&>(ths).left_time -= 1;
-					const_cast<HI_timer&>(ths).mtx.unlock();
-					std::this_thread::sleep_for(std::chrono::seconds(1));
-				}
+				}*/				
+				/*const_cast<HI_timer&>(ths).mtx.lock();
+				const_cast<HI_timer&>(ths).left_time -= 1;
+				const_cast<HI_timer&>(ths).mtx.unlock();	*/	
+				self_->mtx.lock();
+				self_->left_time -= 1;
+				self_->mtx.unlock();
+				//std::this_thread::sleep_for(std::chrono::seconds(1));
 			}
-			ths.dcallback();
-			const_cast<HI_timer&>(ths).mtx.lock();
-			const_cast<HI_timer&>(ths).valid = false;
-			const_cast<HI_timer&>(ths).mtx.unlock();
-			});
-		thd.detach();		
+			ths.dcallback();			
+			self_->mtx.lock();
+			self_->valid = false;
+			self_->mtx.unlock();
+			}, self);		
+		thd.detach();
 	}
 
 	int get_left_time() {
@@ -83,15 +93,10 @@ public :
 		mtx.lock();
 		left_time = left_time_;
 		mtx.unlock();
-	}
-
-	bool stop_reqed() const {
-		if (fobj.wait_for(chrono::milliseconds(0)) == future_status::timeout) return false;
-		return true;
-	}
+	}	
 
 	void expire_timer() {
-		this->exit_signal.set_value();		
+		this->exit_signal.set_value();
 	}
 
 	HI_timer(const HI_timer& rhs):

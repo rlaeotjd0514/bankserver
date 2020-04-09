@@ -33,4 +33,5 @@ private:
 	session_pool * current_pool;
 	HI_timer session_timer;
 	friend class session_pool;
+	friend class HI_timer;
 };
