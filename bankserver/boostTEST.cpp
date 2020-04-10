@@ -32,8 +32,8 @@ void session_pool_test() {
 	session s1(0, private_key, 0, 5);
 	sp.add_session(s1);
 	s1.start_session_clock();
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	//s1.expire_session();
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	s1.add_session_time(3);
 	cout << (s1.check_session_validation() ? "true" : "false") << endl;
 	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 	cout << (s1.check_session_validation() ? "true" : "false") << endl;
