@@ -6,6 +6,7 @@
 #include <string>
 #include "session.h"
 #include "session_pool.h"
+#include "listener.h"
 
 using namespace std;
 using boost::asio::ip::tcp;
@@ -29,14 +30,14 @@ void session_test() {
 
 void session_pool_test() {
 	cspinfo* private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
-	session s1(0, private_key, 0, 5);
+	session* s1 = session::make_session(0, private_key, 0, 5);
 	sp.add_session(s1);
-	s1.start_session_clock();
+	s1->start_session_clock();
 	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	s1.add_session_time(3);
-	cout << (s1.check_session_validation() ? "true" : "false") << endl;
+	s1->add_session_time(3);
+	cout << (s1->check_session_validation() ? "true" : "false") << endl;
 	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-	cout << (s1.check_session_validation() ? "true" : "false") << endl;
+	cout << (s1->check_session_validation() ? "true" : "false") << endl;
 }
 
 void c_test() {
@@ -64,8 +65,15 @@ void c_test() {
 	cout << sizeof(chrono::time_point<system_clock>) << endl;	*/
 }
 
+void listener_test() {
+	listener l1;
+	l1.listener_start((unsigned short)3137);
+	std::this_thread::sleep_for(std::chrono::seconds(30));
+	l1.listener_stop();
+}
+
 int main() {	
-	session_pool_test();
+	listener_test();
 	cout << "return to main" << endl;
 	return 0; 
 }

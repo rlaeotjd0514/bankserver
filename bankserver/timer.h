@@ -21,9 +21,9 @@ private:
 	thread thd;
 	future<void> fobj;
 	promise<void> exit_signal;
-	uint16_t left_time;
+	atomic<uint16_t> left_time;
+	atomic<bool> valid;
 	uint16_t duration;
-	bool valid;
 	function<void(void)> dcallback;
 	function<void(void)> ecallback;
 	timer_type current_type;
@@ -44,7 +44,7 @@ public :
 
 	void start(HI_timer * self) {		
 		auto& ths = *this;			
-		thd = thread([ths](HI_timer * self_) {			
+		thd = thread([&ths](HI_timer * self_) {			
 			future<void> fobj_ = self_->exit_signal.get_future();
 			while (self_->left_time > 0 && fobj_.wait_for(chrono::seconds(1)) == future_status::timeout) {				
 				/*if (ths.current_type == timer_type::event) {
@@ -65,16 +65,12 @@ public :
 				}*/				
 				/*const_cast<HI_timer&>(ths).mtx.lock();
 				const_cast<HI_timer&>(ths).left_time -= 1;
-				const_cast<HI_timer&>(ths).mtx.unlock();	*/	
-				self_->mtx.lock();
-				self_->left_time -= 1;
-				self_->mtx.unlock();
+				const_cast<HI_timer&>(ths).mtx.unlock();	*/					
+				self_->left_time -= 1;				
 				//std::this_thread::sleep_for(std::chrono::seconds(1));
 			}
 			ths.dcallback();			
-			self_->mtx.lock();
-			self_->valid = false;
-			self_->mtx.unlock();
+			self_->valid = false;			
 			}, self);		
 		thd.detach();
 	}
@@ -99,18 +95,5 @@ public :
 		this->exit_signal.set_value();
 	}
 
-	HI_timer(const HI_timer& rhs):
-		left_time(rhs.left_time),
-		valid(true),
-		dcallback(rhs.dcallback),
-		ecallback(rhs.ecallback),
-		current_type(rhs.current_type),
-		duration(rhs.duration)
-	{
-
-	}
-
-	HI_timer operator=(const HI_timer& rhs) {
-		return rhs;
-	}
+	HI_timer(const HI_timer& rhs) = delete;	
 };

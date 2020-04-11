@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "types.h"
 #include "timer.h"
 #include <thread>
@@ -15,13 +15,14 @@ class session
 public :	
 	mutex mtx;
 	session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_);
-	session(const session& cp);
+	session(const session& cp) = delete;
 	void change_validation() noexcept;
 	bool check_session_validation() const;
 	void start_session_clock();
 	void reset_session_clock();
 	void expire_session();
 	void add_session_time(int at);
+	static session* make_session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_);
 	~session() {}
 private:
 	bool session_expr;

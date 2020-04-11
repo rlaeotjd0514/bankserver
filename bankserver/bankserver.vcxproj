@@ -129,16 +129,19 @@
   <ItemGroup>
     <ClInclude Include="BankProtocol.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="listener.h" />
     <ClInclude Include="session.h" />
     <ClInclude Include="session_pool.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="listener동작.txt" />
     <Text Include="전표내용정리.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boostTEST.cpp" />
+    <ClCompile Include="listener.cpp" />
     <ClCompile Include="session.cpp" />
     <ClCompile Include="session_pool.cpp" />
   </ItemGroup>

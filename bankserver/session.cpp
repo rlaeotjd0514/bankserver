@@ -20,6 +20,10 @@ session::session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint3
 	cout << "ctor done" << endl;
 }
 
+session* session::make_session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_) {
+	return new session(s_number_, csp_, secure_seed_, expire_time_);
+}
+
 void session::start_session_clock() {
 	this->session_timer.start(&(this->session_timer));
 }
@@ -34,19 +38,6 @@ void session::add_session_time(int add_time_) {
 
 void session::expire_session() {
 	this->session_timer.expire_timer();
-}
-
-session::session(const session& cp):
-	session_number(cp.session_number),
-	expire_time(cp.expire_time),
-	secure_seed(cp.secure_seed),
-	current_customer(cp.current_customer),
-	session_seed(rand() % ULLONG_MAX),
-	session_expr(cp.session_expr),
-	current_pool(cp.current_pool),
-	session_timer(cp.session_timer)
-{
-
 }
 
 void session::change_validation() noexcept {

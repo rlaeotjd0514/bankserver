@@ -33,9 +33,13 @@
     <ClInclude Include="session_pool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="listener.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="전표내용정리.txt" />
+    <Text Include="listener동작.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boostTEST.cpp">
@@ -45,6 +49,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="session_pool.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="listener.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
