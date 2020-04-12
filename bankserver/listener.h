@@ -5,6 +5,8 @@
 #include <atomic>
 #include <memory>
 #include <iostream>
+#include <sstream>
+#include "stringcontrol.h"
 
 using namespace boost;
 using boost::asio::ip::tcp;
@@ -36,13 +38,15 @@ private:
 	void handle_client(std::shared_ptr<asio::ip::tcp::socket> sock) {
 		try {
 			asio::streambuf req;
-			//asio::read_until(*sock.get(), req, '\n');
+			asio::read_until(*sock.get(), req, "end");			
 			/*
 			parse req stream &
 			add to session queue 
 			*/
-			std::string res = "server response";
+			std::string res((std::istreambuf_iterator<char>(&req)), std::istreambuf_iterator<char>());		
+			stringcontroler::replace_string(res, "end", "");
 			asio::write(*sock.get(), asio::buffer(res));
+			sock.get()->close();
 		}
 		catch (system::system_error& e) {
 			OutputDebugString(e.what());

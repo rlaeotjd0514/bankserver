@@ -1,0 +1,10 @@
+C:\Users\31337\source\repos\bankserver\bankUITester\bin\Debug\bankUITester.exe.config
+C:\Users\31337\source\repos\bankserver\bankUITester\bin\Debug\bankUITester.exe
+C:\Users\31337\source\repos\bankserver\bankUITester\bin\Debug\bankUITester.pdb
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.Form1.resources
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.Properties.Resources.resources
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.csproj.GenerateResource.cache
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.csproj.CoreCompileInputs.cache
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.exe
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.pdb
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.csprojAssemblyReference.cache
