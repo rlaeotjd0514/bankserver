@@ -1,8 +1,8 @@
+#pragma once
 #include <iostream>
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <chrono>
-#include "debug.h"
 #include <string>
 #include "session.h"
 #include "session_pool.h"
@@ -12,33 +12,33 @@ using namespace std;
 using boost::asio::ip::tcp;
 using namespace boost::asio::chrono;
 
-session_pool sp;
+//session_pool sp;
 
 void print(const boost::system::error_code&) {
 	std::cout << "Hello, world!" << endl;
 }
 
-void session_test() {
-	cspinfo * private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
-	session s1(0, private_key, 0, 5);
-	cout << "Session Started" << endl;
-	cout << "Session validation : " << (s1.check_session_validation() ? "true" : "false") << endl;		
-	std::this_thread::sleep_for(std::chrono::seconds(10));
-	auto ret = s1.check_session_validation();
-	cout << "Session validation : " << (ret ? "true" : "false") << endl;
-}
-
-void session_pool_test() {
-	cspinfo* private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
-	session* s1 = session::make_session(0, private_key, 0, 5);
-	sp.add_session(s1);
-	s1->start_session_clock();
-	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	s1->add_session_time(3);
-	cout << (s1->check_session_validation() ? "true" : "false") << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-	cout << (s1->check_session_validation() ? "true" : "false") << endl;
-}
+//void session_test() {
+//	cspinfo * private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
+//	session s1(0, private_key, 0, 5);
+//	cout << "Session Started" << endl;
+//	cout << "Session validation : " << (s1.check_session_validation() ? "true" : "false") << endl;		
+//	std::this_thread::sleep_for(std::chrono::seconds(10));
+//	auto ret = s1.check_session_validation();
+//	cout << "Session validation : " << (ret ? "true" : "false") << endl;
+//}
+//
+//void session_pool_test() {
+//	cspinfo* private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
+//	session* s1 = session::make_session(0, private_key, 0, 5);
+//	sp.add_session(s1);
+//	s1->start_session_clock();
+//	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//	s1->add_session_time(3);
+//	cout << (s1->check_session_validation() ? "true" : "false") << endl;
+//	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+//	cout << (s1->check_session_validation() ? "true" : "false") << endl;
+//}
 
 void c_test() {
 	/*boost::asio::io_service io;

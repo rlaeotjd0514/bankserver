@@ -5,7 +5,6 @@
 #include <chrono>
 #include <cstdlib>
 #include <time.h>
-#include "types.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -50,6 +49,7 @@ namespace bank_info_type {
 		cspinfo& operator = (const cspinfo& cspinfo_p) {
 			this->csid = cspinfo_p.csid;
 			this->cspass = cspinfo_p.cspass;
+			return *this;
 		}
 
 		cspinfo() {
@@ -98,6 +98,7 @@ namespace bank_info_type {
 		tspinfo& operator = (const tspinfo& tspinfo_p) noexcept {
 			this->tsid = tspinfo_p.tsid;
 			this->tspass = tspinfo_p.tspass;
+			return *this;
 		}
 
 		tspinfo(const tspinfo& t_) = delete;

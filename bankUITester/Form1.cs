@@ -22,6 +22,8 @@ namespace bankUITester
 
         Socket clisock1 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
+        byte[] SGMK_LE = { 0x4B, 0x4D, 0x47, 0x53 };
+
         private void connectbutton_Click(object sender, EventArgs e)
         {
             IPEndPoint servadd = new IPEndPoint(IPAddress.Parse(ipaddressbox.Text), Convert.ToInt32(portbox.Text));
@@ -38,7 +40,9 @@ namespace bankUITester
 
         private void sendbutton_Click(object sender, EventArgs e)
         {
-            byte[] msg = ASCIIEncoding.ASCII.GetBytes(SendBodyBox.Text + "end");
+            byte[] msg = new byte[SendBodyBox.Text.Length + 4];
+            Buffer.BlockCopy(SGMK_LE, 0, msg, 0, SGMK_LE.Length);
+            Buffer.BlockCopy(ASCIIEncoding.ASCII.GetBytes(SendBodyBox.Text), 0, msg, SGMK_LE.Length, ASCIIEncoding.ASCII.GetBytes(SendBodyBox.Text).Length);
             clisock1.Send(msg);
 
             byte[] res = new byte[255];
@@ -49,6 +53,16 @@ namespace bankUITester
             clisock1.Shutdown(SocketShutdown.Both);
             clisock1.Close();
             statuslabel.Text = "connection closed";
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            if(clisock1.Connected == true)
+            {
+                clisock1.Shutdown(SocketShutdown.Both);
+                clisock1.Close();
+            }
+            clisock1 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
     }
 }

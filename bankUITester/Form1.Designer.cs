@@ -35,6 +35,7 @@
             this.connectbutton = new System.Windows.Forms.Button();
             this.statuslabel = new System.Windows.Forms.Label();
             this.recieveBox = new System.Windows.Forms.RichTextBox();
+            this.resetButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // sendbutton
@@ -96,11 +97,22 @@
             this.recieveBox.TabIndex = 6;
             this.recieveBox.Text = "";
             // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(432, 172);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(75, 23);
+            this.resetButton.TabIndex = 7;
+            this.resetButton.Text = "reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 201);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.recieveBox);
             this.Controls.Add(this.statuslabel);
             this.Controls.Add(this.connectbutton);
@@ -124,6 +136,7 @@
         private System.Windows.Forms.Button connectbutton;
         private System.Windows.Forms.Label statuslabel;
         private System.Windows.Forms.RichTextBox recieveBox;
+        private System.Windows.Forms.Button resetButton;
     }
 }
 

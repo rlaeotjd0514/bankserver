@@ -1,5 +1,4 @@
 #pragma once
-
 #include <boost/asio.hpp>
 #include <thread>
 #include <atomic>
@@ -7,9 +6,11 @@
 #include <iostream>
 #include <sstream>
 #include "stringcontrol.h"
+#include "BankProtocol.h"
 
 using namespace boost;
 using boost::asio::ip::tcp;
+using namespace bank_network_methods;
 
 class listener;
 
@@ -38,14 +39,22 @@ private:
 	void handle_client(std::shared_ptr<asio::ip::tcp::socket> sock) {
 		try {
 			asio::streambuf req;
-			asio::read_until(*sock.get(), req, "end");			
+			asio::read_until(*sock.get(), req, 0x4B4D4753);
 			/*
 			parse req stream &
 			add to session queue 
 			*/
+
+			uint8_t* req_byte = (uint8_t*)req.data().data();
+
+			find_signature(&req_byte, req.data().size());
+
+			/*
+			parse ended
+			*/
 			std::string res((std::istreambuf_iterator<char>(&req)), std::istreambuf_iterator<char>());		
-			stringcontroler::replace_string(res, "end", "");
-			asio::write(*sock.get(), asio::buffer(res));
+			//stringcontroler::replace_string(res, (const char *)0x4B4D4753, "");
+			asio::write(*sock.get(), asio::buffer(string((char*)req_byte)));
 			sock.get()->close();
 		}
 		catch (system::system_error& e) {
