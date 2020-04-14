@@ -53,7 +53,7 @@ private:
 			parse ended
 			*/
 			std::string res((std::istreambuf_iterator<char>(&req)), std::istreambuf_iterator<char>());		
-			//stringcontroler::replace_string(res, (const char *)0x4B4D4753, "");
+			stringcontroler::replace_string(res, (const char *)0x4B4D4753, "");
 			asio::write(*sock.get(), asio::buffer(string((char*)req_byte)));
 			sock.get()->close();
 		}
