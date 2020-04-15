@@ -1,7 +1,5 @@
 #pragma once
-#include <cstdio>
-#include "types.h"
-
+#include "pch.h"
 
 using namespace std;
 using namespace bank_info_type;
@@ -20,7 +18,9 @@ namespace bank_network_methods {
 
 	uint8_t* find_signature(uint8_t** buffer, uint32_t len);
 
-	uint8_t* parse_packet(uint8_t* buffer, uint32_t len);
+	uint8_t* decode_packet(uint8_t* buffer, uint32_t len);
+
+	uint8_t* classify_packet(uint8_t* buffer, uint32_t len);
 }
 
 

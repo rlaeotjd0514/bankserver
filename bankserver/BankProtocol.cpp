@@ -11,7 +11,6 @@ using namespace chrono;
 
 namespace bank_network_methods {
 	///object to parse bytes -> cspinfo/tspfino	
-
 	constexpr auto CURRENT_VERSION = 0x01;
 	constexpr auto TRANSACTION_TYPE_SEND = 0x01;
 	constexpr auto TRANSACTION_TYPE_RECIEVE = 0x02;
@@ -90,7 +89,7 @@ namespace bank_network_methods {
 		}
 	}
 
-	uint8_t* parse_packet(uint8_t* buffer, uint32_t len) {
+	uint8_t* decode_packet(uint8_t* buffer, uint32_t len) {
 		uint8_t* res = (uint8_t*)malloc(len);
 		unsigned short offset;
 		for (offset = 0; offset < len; offset += 4) {

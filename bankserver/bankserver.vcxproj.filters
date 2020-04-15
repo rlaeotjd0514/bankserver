@@ -39,6 +39,9 @@
     <ClInclude Include="stringcontrol.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="전표내용정리.txt" />
@@ -58,6 +61,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="BankProtocol.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

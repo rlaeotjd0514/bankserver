@@ -1,8 +1,5 @@
 #pragma once
-
-#include <string>
-#include <cstring>
-#include <regex>
+#include "pch.h"
 
 using namespace std;
 

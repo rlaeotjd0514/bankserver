@@ -1,12 +1,11 @@
  #pragma once
-#include "types.h"
+#include "pch.h"
 #include "timer.h"
-#include <thread>
-#include <mutex>
 #include "session_pool.h"
 
 using namespace std;
 using namespace bank_info_type;
+using namespace boost::asio::ip;
 
 class session_pool;
 
@@ -14,7 +13,7 @@ class session
 {
 public :	
 	mutex mtx;
-	session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_);
+	session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_, tcp::endpoint cli_socket_);
 	session(const session& cp) = delete;
 	void change_validation() noexcept;
 	bool check_session_validation() const;
@@ -22,7 +21,8 @@ public :
 	void reset_session_clock();
 	void expire_session();
 	void add_session_time(int at);
-	static session* make_session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_);
+	tcp::socket accept_client(tcp::endpoint cli_ep);
+	static session* make_session(uint32_t s_number_, cspinfo* csp_, uint32_t secure_seed_, uint32_t expire_time_, tcp::endpoint cli_socket_);
 	~session() {}
 private:
 	bool session_expr;
@@ -33,6 +33,7 @@ private:
 	cspinfo& current_customer;
 	session_pool * current_pool;
 	HI_timer session_timer;
+	tcp::endpoint cli_socket;
 	friend class session_pool;
 	friend class HI_timer;
 };

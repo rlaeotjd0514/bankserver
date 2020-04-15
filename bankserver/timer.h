@@ -6,12 +6,7 @@
 대기시간의 단위를 작게하면 반복문을 도는 횟수가 많아져 설정한 시간보다 오래대기함 추후 타이머 클래스 재작성 필요
 */
 #pragma once
-#include <functional>
-#include <mutex>
-#include <future>
-#include <iostream>
-#include <time.h>
-#include <Windows.h>
+#include "pch.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+#include "pch.h"
 #include "session.h"
 
 using namespace std;
@@ -13,8 +13,9 @@ public :
 	int get_session_count() const;
 	~session_pool() {}
 	session_pool(const session_pool& rhs) = delete;
-	void session_start();
-private:
+	void session_pool_start(future<void> &stop_ev_);
+private:	
+	mutex mtx;
 	uint16_t pool_id_;
 	list<session*> session_list;
 };

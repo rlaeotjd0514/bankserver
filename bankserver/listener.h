@@ -1,12 +1,5 @@
 #pragma once
-#include <boost/asio.hpp>
-#include <thread>
-#include <atomic>
-#include <memory>
-#include <iostream>
-#include <sstream>
-#include "stringcontrol.h"
-#include "BankProtocol.h"
+#include "pch.h"
 
 using namespace boost;
 using boost::asio::ip::tcp;
@@ -49,6 +42,7 @@ private:
 
 			find_signature(&req_byte, req.data().size());
 
+			
 			/*
 			parse ended
 			*/

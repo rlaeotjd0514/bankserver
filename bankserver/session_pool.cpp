@@ -16,8 +16,30 @@ int session_pool::get_session_count() const {
 	return session_list.size();
 }
 
-void session_pool::session_start() {
-	for (session * s : session_list) {
-		s->start_session_clock();
-	}
+void session_pool::session_pool_start(future<void>& stop_ev_) {	
+	thread th([&stop_ev_, this]() {
+		while (stop_ev_.wait_for(std::chrono::microseconds(100)) != std::future_status::timeout) {
+			mtx.lock();
+			size_t sl_sz = session_list.size();
+			mtx.unlock();
+			if (sl_sz > 0) {
+				thread client_thread([&]() {
+					mtx.lock();
+					session* session_ptr_ = session_list.front();
+					session_list.pop_front();
+					mtx.unlock();
+					auto cli_ep = session_ptr_->cli_socket;
+					unsigned short port_num = session_ptr_->session_seed % 31337;
+					tcp::socket client_handle = session_ptr_->accept_client(cli_ep);
+					session_ptr_->start_session_clock();
+
+					/*do something with client*/
+
+					session_ptr_->expire_session();
+				});				
+				client_thread.detach();
+			}
+		}
+	});
+	th.detach();
 }
