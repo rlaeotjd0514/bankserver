@@ -7,6 +7,16 @@ using namespace chrono;
 
 namespace bank_network_methods {
 	///object to parse bytes -> cspinfo/tspfino
+
+	constexpr auto CURRENT_VERSION = 0x01;
+	constexpr auto TRANSACTION_TYPE_SEND = 0x01;
+	constexpr auto TRANSACTION_TYPE_RECIEVE = 0x02;
+	constexpr auto TRANSACTION_TYPE_DEPOSIT = 0x03;
+	constexpr auto TRANSACTION_TYPE_WITHDRAW = 0x04;
+	constexpr uint32_t SGMK_LE = 0x4B4D4753;
+	constexpr uint32_t SGMK_BE = 0x53474D4B;
+	constexpr uint32_t MASK = 0xffffffff;
+
 	struct pinfo {
 		uint8_t ppass[26];
 		unsigned long pid;
@@ -20,7 +30,13 @@ namespace bank_network_methods {
 
 	uint8_t* decode_packet(uint8_t* buffer, uint32_t len);
 
+	///
+	///<summary>classify packet inquery</summary>
+	///
 	uint8_t* classify_packet(uint8_t* buffer, uint32_t len);
+
+	///<summary>parse session requiring packet</summary>
+	uint8_t* parse_require_packet(uint8_t* buffer, uint32_t len);
 }
 
 

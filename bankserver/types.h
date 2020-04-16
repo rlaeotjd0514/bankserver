@@ -118,7 +118,7 @@ namespace bank_info_type {
 	class transaction {	
 	public:
 		enum class t_type { send, receive, deposit, withdraw, change_status};
-		transaction(transaction::t_type type, cspinfo s, cspinfo r, unsigned long long amount, uint32_t loc, std::chrono::time_point<system_clock> req_t) {
+		transaction(transaction::t_type type, cspinfo s, cspinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
   			transaction_type = type;
 			sender_ip = s;
 			receive_ip = r;
@@ -126,7 +126,7 @@ namespace bank_info_type {
 			this->location = loc;	
 			this->tsinfo = tspinfo();
 			this->transaction_ctime = std::chrono::system_clock::now();
-			this->transaction_rtime = req_t;
+			this->transaction_rtime = req_t;			
 		}
 	private:
 		tspinfo tsinfo;
@@ -135,7 +135,7 @@ namespace bank_info_type {
 		cspinfo receive_ip;
 		std::chrono::time_point<system_clock> transaction_ctime;
 		std::chrono::time_point<system_clock> transaction_rtime;
-		uint32_t location;
+		boost::asio::ip::tcp::endpoint location;
 		unsigned long long amount;
 	};
 

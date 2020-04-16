@@ -7,3 +7,4 @@ C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.cspro
 C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.csproj.CoreCompileInputs.cache
 C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.exe
 C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.pdb
+C:\Users\31337\source\repos\bankserver\bankUITester\obj\Debug\bankUITester.csprojAssemblyReference.cache

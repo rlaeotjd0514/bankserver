@@ -1,12 +1,16 @@
-﻿  session.cpp
+﻿  boostTEST.cpp
   Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
-  session_pool.cpp
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,1): warning C4305: '인수': 'const uint32_t'에서 'char'(으)로 잘립니다.
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,39): warning C4309: '인수': 상수 값이 잘립니다.
+  listener.cpp
   Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,1): warning C4305: '인수': 'const uint32_t'에서 'char'(으)로 잘립니다.
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,39): warning C4309: '인수': 상수 값이 잘립니다.
   코드를 생성하고 있습니다...
-  bankserver.vcxproj -> C:\Users\31337\source\repos\bankserver\Debug\bankserver.exe
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(854,5): error MSB6006: "link.exe"이(가) 종료되었습니다(코드: -1073741502).
