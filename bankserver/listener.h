@@ -1,11 +1,11 @@
 #pragma once
 #include "pch.h"
+#include "BankProtocol.h"
 #include "DBQuery.h"
 #include "session_pool.h"
-#include "BankProtocol.h"
+#include "stringcontrol.h"
 
 using namespace boost;
-using namespace bank_network_methods;
 using namespace db_controller;
 using boost::asio::ip::tcp;
 
@@ -17,7 +17,7 @@ public:
 	void accept_();
 private:
 	asio::io_context& m_ios;
-	tcp::acceptor m_acceptor;	
+	tcp::acceptor m_acceptor;
 	vector<session_pool*> sp_list;
 	friend class listener;
 };
@@ -26,38 +26,43 @@ class service {
 public :
 	service() {}
 
-	void handler_function(std::shared_ptr<asio::ip::tcp::socket> sock) {
-		std::thread th(([this, sock]() {
-			handle_client(sock);
-			}));
-		th.detach();
-	}
-private:
-	///<summary> 핸들 클라이언트의 반환값을 특정한 코드(이넘)같은걸로 바꾸고 클라이언트가 연결했을 때 정보를 반환하여 실제 처리는 acceptor에서 처리하도록 변경. service 클래스는 순수하게 클라이언트와의 통신만을 담당함</summary>
-	void handle_client(std::shared_ptr<asio::ip::tcp::socket> sock) {
-		try {
-			asio::streambuf req;
-			asio::read_until(*sock.get(), req, SGMK_LE);
+	void handler_function(std::shared_ptr<asio::ip::tcp::socket> sock, session_pool* sp_) {
+		std::thread th(([this, sock, sp_]() {
+			uint8_t* req_byte = handle_client(sock);
 			/*
-			parse req stream &
-			add to session queue 
+			parse req stream & add to session queue
 			*/
-
-			uint8_t* req_byte = (uint8_t*)req.data().data();
-			find_signature(&req_byte, req.data().size());
 			pinfo* inquery_customer = (pinfo*)req_byte[0];
 			tcp::endpoint cli_ep = sock->remote_endpoint();
-			if (query_single_customer(*inquery_customer)) {
-				
-			}			
-
 			/*
 			parse ended
 			*/
-			std::string res((std::istreambuf_iterator<char>(&req)), std::istreambuf_iterator<char>());		
+			bank_query* bq = new bank_query();
+			if (bq->query_single_customer(*inquery_customer)) {
+				//세션을 만들고 / session_list 에 넣기
+				cspinfo tc_csp = cspinfo(inquery_customer->pid, string((char*)inquery_customer->ppass));
+				session* clis = session::make_session(sp_->get_session_count() + 1, tc_csp, rand() % INT_MAX, 5, cli_ep);
+				sp_->add_session(*clis);
+			}
+		}));
+		th.detach();
+	}
+private:	
+	uint8_t* handle_client(std::shared_ptr<asio::ip::tcp::socket> sock) {
+		try {
+			asio::streambuf req;
+			asio::read_until(*sock.get(), req, SGMK_LE);			
+			uint8_t* req_byte = (uint8_t*)req.data().data();
+			if (find_signature(&req_byte, req.data().size())) {
+				return nullptr;
+			}
+			else {
+				return req_byte;						
+			}			
+			/*std::string res((std::istreambuf_iterator<char>(&req)), std::istreambuf_iterator<char>());		
 			stringcontroler::replace_string(res, (const char *)0x4B4D4753, "");
 			asio::write(*sock.get(), asio::buffer(string((char*)req_byte)));
-			sock.get()->close();
+			sock.get()->close();*/
 		}
 		catch (system::system_error& e) {
 			OutputDebugString(e.what());

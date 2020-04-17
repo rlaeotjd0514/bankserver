@@ -20,7 +20,3 @@
 #include <chrono>
 #include <cstdlib>
 #include <list>
-
-#include "stringcontrol.h"
-#include "types.h"
-#include "BankProtocol.h"

@@ -90,5 +90,23 @@ public :
 		this->exit_signal.set_value();
 	}
 
-	HI_timer(const HI_timer& rhs) = delete;	
+	HI_timer(const HI_timer& rhs) {
+		this->current_type = rhs.current_type;
+		this->dcallback = rhs.dcallback;
+		this->duration = rhs.duration;
+		this->ecallback = rhs.ecallback;
+		this->left_time.store(rhs.left_time.load());
+		this->valid.store(rhs.left_time.load());
+	}
+
+	void operator=(const HI_timer& rhs) {
+		this->current_type = rhs.current_type;
+		this->dcallback = rhs.dcallback;
+		this->duration = rhs.duration;
+		this->ecallback = rhs.ecallback;
+		this->left_time.store(rhs.left_time.load());
+		this->valid.store(rhs.left_time.load());
+	}
+
+	HI_timer() {}
 };

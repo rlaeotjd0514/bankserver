@@ -7,9 +7,12 @@ session_pool::session_pool():
 
 }
 
-void session_pool::add_session(session * s_) {
-	session_list.push_back(s_);
-	s_->current_pool = this;		
+void session_pool::add_session(session s_) {
+	session_list_value.push_back(s_);
+	s_.current_pool = this;
+	session_list.push_back(&session_list_value.back());
+	///this code is for context safeness::if we create session in client handling function context, the thread will be detached and the variable will be distroyed.
+	///Therefore, we should create vector for storing the session value, and point the vector's tail. 
 }
 
 int session_pool::get_session_count() const {

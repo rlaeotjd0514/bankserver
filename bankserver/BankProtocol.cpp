@@ -1,8 +1,8 @@
 #include "BankProtocol.h"
+#include "types.h" 
 #include <cstdio>
 #include <exception>
 #include <time.h>
-#include "types.h"
 #include <chrono>
 
 using namespace std;
@@ -10,7 +10,7 @@ using namespace bank_info_type;
 using namespace chrono;
 
 namespace bank_network_methods {
-	///object to parse bytes -> cspinfo/tspfino	
+	///<summary>object to parse bytes -> cspinfo/tspfino</summary>
 	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len) {
 		uint16_t* version = (uint16_t*)buffer[0];
 		if (*version != CURRENT_VERSION) return nullptr;
@@ -70,6 +70,7 @@ namespace bank_network_methods {
 		}
 	}
 
+	///<summary>find SGMK mark on recieved packed</summary>
 	uint8_t* find_signature(uint8_t** buffer, uint32_t len) {
 		if (*(uint32_t*)(*buffer) == SGMK_BE) {
 			*buffer += 4;
@@ -80,6 +81,7 @@ namespace bank_network_methods {
 		}
 	}
 
+	///<summary>decode packet with signature</summary>
 	uint8_t* decode_packet(uint8_t* buffer, uint32_t len) {
 		uint8_t* res = (uint8_t*)malloc(len);
 		unsigned short offset;

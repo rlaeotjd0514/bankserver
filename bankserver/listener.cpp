@@ -25,5 +25,5 @@ void acceptor_::accept_() {
 		throw new std::exception("listener::pool is not available");
 	}
 
-	(new service)->handler_function(sock);
+	(new service)->handler_function(sock, available_pool);
 }
