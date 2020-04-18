@@ -22,6 +22,7 @@ private:
 	friend class listener;
 };
 
+///<summary><br>Service class is incharge of communicating with client.</br></summary>
 class service {
 public :
 	service() {}

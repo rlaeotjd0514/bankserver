@@ -5,7 +5,7 @@ using namespace std;
 using namespace std::chrono;
 
 namespace bank_info_type {	
-	///날짜
+	///<summary>date class(not useing)</summary>
 	struct date {		
 		unsigned short year;
 		unsigned short month;
@@ -15,7 +15,7 @@ namespace bank_info_type {
 		unsigned short second;
 	};
 
-	///고객고유시드
+	///<summary>client seed convert class::</summary>
 	class cspinfo {
 	private:
 		bool random_authorized = false;
@@ -64,7 +64,9 @@ namespace bank_info_type {
 		}
 	};
 
-	///트랜잭션 고유시드
+	///<summary><br>transaction information</br>
+	///<br>if client creates a session and send a request, it will create corresponding transaction for that request</br>
+	///</summary>
 	class tspinfo {
 	private:
 		bool random_authorized = false;
@@ -114,7 +116,8 @@ namespace bank_info_type {
 			tspass = tsppass_;
 		}
 	};
-	///거래 트랜잭션
+	
+	///<summary>transaction creator class</summary>
 	class transaction {	
 	public:
 		enum class t_type { send, receive, deposit, withdraw, change_status};
@@ -139,7 +142,7 @@ namespace bank_info_type {
 		unsigned long long amount;
 	};
 
-	///트랜잭션 결과표
+	///<summary>transaction result class</summary>
 	class t_result {
 	private:
 		uint8_t result_code;
@@ -148,7 +151,7 @@ namespace bank_info_type {
 		t_result(uint8_t result_code_, string emsg) : result_code(result_code_), error_msg(emsg) {}
 	};
 
-	///개인정보 :=>계정
+	///<summary>individual information</summary>
 	struct individual_info {
 		wchar_t name[10];
 		date birth{ 0, 0, 0, 0, 0, 0 };
@@ -157,7 +160,7 @@ namespace bank_info_type {
 		vector<string> contact_list;
 	};
 	
-	///계정
+	///<summary>client accout class</summary>
 	class account {
 	private:
 		cspinfo csinfo;

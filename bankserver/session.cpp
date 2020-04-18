@@ -54,7 +54,6 @@ void session::start_session_clock() {
 void session::reset_session_clock() {
 	
 }
-
 ///<summary>Add to session clocks remaining time</summary>
 void session::add_session_time(int add_time_) {
 	this->session_timer.add_to_left_time(add_time_);
