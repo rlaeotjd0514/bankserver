@@ -67,13 +67,18 @@ void c_test() {
 
 void listener_test() {
 	listener l1;
+	session_pool * sp1 = new session_pool();
+	promise<void> stop_lebber;
+	future<void> ft = stop_lebber.get_future();
+	sp1->session_pool_start(ft);
+	l1.assign_session_pool(sp1);
 	l1.listener_start((unsigned short)3137);
-	std::this_thread::sleep_for(std::chrono::seconds(30));
+	std::this_thread::sleep_for(std::chrono::seconds(3600));
 	l1.listener_stop();
 }
 
 int main() {	
-	//listener_test();
+	listener_test();
 	cout << "return to main" << endl;
 	return 0; 
 }

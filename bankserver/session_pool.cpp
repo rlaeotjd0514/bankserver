@@ -25,32 +25,24 @@ int session_pool::get_session_count() const {
 ///<summary>session_pool starts dispose of session_lists.</summary>
 void session_pool::session_pool_start(future<void>& stop_ev_) {	
 	thread th([&stop_ev_, this]() {
-		while (stop_ev_.wait_for(std::chrono::microseconds(100)) != std::future_status::timeout) {
+		while (stop_ev_.wait_for(std::chrono::microseconds(100)) == std::future_status::timeout) {
 			mtx.lock();
 			size_t sl_sz = session_list.size();
 			mtx.unlock();
 			if (sl_sz > 0) {
-				thread client_thread([&]() {
-
-					mtx.lock();
-
-					session* session_ptr_ = session_list.front();
-					session_list.pop_front();
-
-					mtx.unlock();
-
-					auto cli_ep = session_ptr_->cli_socket;
-					unsigned short port_num = session_ptr_->session_seed % 31337;
-					tcp::socket client_handle = session_ptr_->accept_client(cli_ep);
-					session_ptr_->start_session_clock();
-
-					/*do something with client*/
-
-					session_ptr_->expire_session();
-				});				
+				mtx.lock();
+				session* session_ptr_ = session_list.front();
+				session_list.pop_front();
+				auto cli_ep = session_ptr_->cli_socket;
+				//unsigned short port_num = session_ptr_->session_seed % 31337;					
+				mtx.unlock();
+				thread client_thread([=]() {					
+					tcp::socket client_handle = session_ptr_->accept_client(cli_ep);													
+				});							
 				client_thread.detach();
 			}
 		}
+		cout << "session pool loop end" << endl;
 	});
 	th.detach();
 }

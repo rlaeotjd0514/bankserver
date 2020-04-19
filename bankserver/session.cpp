@@ -25,7 +25,7 @@ session::session(uint32_t s_number_, cspinfo csp_, uint32_t secure_seed_, uint32
 			cout << "session have expired" << endl;			
 		}, []() {})	
 {				
-	cout << "ctor done" << endl;
+	cout << "session ctor done" << endl;
 }
 
 session::session(const session& cp)
@@ -63,11 +63,25 @@ void session::add_session_time(int add_time_) {
 ///this function remains block until client sends connection request
 ///</summary>
 tcp::socket session::accept_client(tcp::endpoint cli_ep)
-{
-	boost::asio::io_service ios;
-	boost::asio::ip::tcp::socket sock(ios, cli_ep.protocol());
-	sock.connect(cli_ep);	
-	return sock;
+{	
+	boost::asio::io_service a_ios;
+	boost::asio::ip::tcp::socket sock(a_ios, cli_ep.protocol());
+	boost::asio::ip::tcp::acceptor gate = boost::asio::ip::tcp::acceptor(a_ios, tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), cli_ep.port()));
+	try {
+		gate.listen();
+		gate.accept(sock);
+	}
+	catch (boost::system::system_error& e) {
+		OutputDebugString(e.what());
+	}
+
+	this->start_session_clock();
+	//handle client request...
+
+	//handling request code;
+
+	//////////////////////////	
+	return sock;//should be returning result.
 }
 
 ///<summary>Expire session(sends exit signal to under threads)</summary>
