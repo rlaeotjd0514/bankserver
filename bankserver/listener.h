@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "BankProtocol.h"
-#include "DBQuery.h"
+#include "bank_protocol.h"
+#include "db_query.h"
 #include "session_pool.h"
 #include "stringcontrol.h"
 

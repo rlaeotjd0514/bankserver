@@ -1,4 +1,4 @@
-#include "BankProtocol.h"
+#include "bank_protocol.h"
 #include "types.h" 
 #include <cstdio>
 #include <exception>

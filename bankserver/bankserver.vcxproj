@@ -127,8 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BankProtocol.h" />
-    <ClInclude Include="DBQuery.h" />
+    <ClInclude Include="bank_protocol.h" />
+    <ClInclude Include="bank_error.h" />
+    <ClInclude Include="db_query.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="listener.h" />
     <ClInclude Include="pch.h" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="listener동작.txt" />
+    <Text Include="What Should Do Next.txt" />
     <Text Include="전표내용정리.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -18,9 +18,6 @@
     <ClInclude Include="types.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="BankProtocol.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="session.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -42,13 +39,20 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="DBQuery.h">
+    <ClInclude Include="bank_error.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bank_protocol.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="db_query.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="전표내용정리.txt" />
     <Text Include="listener동작.txt" />
+    <Text Include="What Should Do Next.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boostTEST.cpp">

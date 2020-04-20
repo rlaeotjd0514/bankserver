@@ -89,7 +89,7 @@ void session::expire_session() {
 	this->session_timer.expire_timer();
 }
 
-///<summary>Should not be used by lib user. Used on changing session validation</summary>
+///<summary>Should not be used by lib user. Used on changing session validation.</summary>
 void session::change_validation() noexcept {
 	mtx.lock();
 	this->session_expr = !(this->session_expr);
