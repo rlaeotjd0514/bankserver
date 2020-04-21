@@ -73,6 +73,7 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 	}
 	catch (boost::system::system_error& e) {
 		OutputDebugString(e.what());
+		cout << e.what() << endl;
 	}
 
 	this->start_session_clock();
@@ -80,7 +81,7 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 
 	//handling request code;
 
-	//////////////////////////	
+	//////////////////////////
 	return sock;//should be returning result.
 }
 

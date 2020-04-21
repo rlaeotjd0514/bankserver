@@ -26,7 +26,6 @@ private:
 class service {
 public :
 	service() {}
-
 	void handler_function(std::shared_ptr<asio::ip::tcp::socket> sock, session_pool* sp_) {
 		std::thread th(([this, sock, sp_]() {
 			uint8_t* req_byte = handle_client(sock, sp_);			
@@ -107,7 +106,3 @@ private:
 	asio::io_context m_ios;
 	friend class acceptor_;
 };
-
-
-
-

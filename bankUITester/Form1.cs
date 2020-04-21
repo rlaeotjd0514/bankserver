@@ -56,14 +56,16 @@ namespace bankUITester
 
             int acport = ((IPEndPoint)clisock1.LocalEndPoint).Port;
 
-            if(resv == "queued")
+            clisock1.Shutdown(SocketShutdown.Both);
+            clisock1.Close();
+
+            if (resv == "queued")
             {
                 clisock2.Connect(new IPEndPoint(IPAddress.Parse(ipaddressbox.Text), acport));
                 MessageBox.Show("connection succeeded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
 
-            clisock1.Shutdown(SocketShutdown.Both);
-            clisock1.Close();
+            
             statuslabel.Text = "connection closed";
             resetButton_Click(null, EventArgs.Empty);
         }
