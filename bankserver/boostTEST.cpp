@@ -65,20 +65,22 @@ void c_test() {
 	cout << sizeof(chrono::time_point<system_clock>) << endl;	*/
 }
 
-void listener_test() {
+void listener_test(string ip_a) {
 	listener l1;
 	session_pool * sp1 = new session_pool();
 	promise<void> stop_lebber;
 	future<void> ft = stop_lebber.get_future();
 	sp1->session_pool_start(ft);
 	l1.assign_session_pool(sp1);
-	l1.listener_start((unsigned short)3137);
+	l1.listener_start(ip_a, (unsigned short)3137);
 	std::this_thread::sleep_for(std::chrono::seconds(3600));
 	l1.listener_stop();
 }
 
 int main() {	
-	listener_test();
+	string bind_s;
+	cin >> bind_s;
+	listener_test(bind_s);
 	cout << "return to main" << endl;
 	return 0; 
 }

@@ -66,10 +66,11 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 {	
 	boost::asio::io_service a_ios;
 	boost::asio::ip::tcp::socket sock(a_ios, cli_ep.protocol());
-	boost::asio::ip::tcp::acceptor gate = boost::asio::ip::tcp::acceptor(a_ios, tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), cli_ep.port()));
+	boost::asio::ip::tcp::acceptor gate = boost::asio::ip::tcp::acceptor(a_ios, tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), cli_ep.port() - 1));
 	try {
 		gate.listen();
 		gate.accept(sock);
+		cout << "client connection succeed::" << this->current_customer.printcspinfo() << endl;
 	}
 	catch (boost::system::system_error& e) {
 		OutputDebugString(e.what());

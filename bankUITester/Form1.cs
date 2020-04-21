@@ -59,9 +59,10 @@ namespace bankUITester
             clisock1.Shutdown(SocketShutdown.Both);
             clisock1.Close();
 
-            if (resv == "queued")
+            if (resv.Trim('\0') == "queued")
             {
-                clisock2.Connect(new IPEndPoint(IPAddress.Parse(ipaddressbox.Text), acport));
+                MessageBox.Show("connecting to " + acport.ToString());
+                clisock2.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), acport - 1));
                 MessageBox.Show("connection succeeded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
 

@@ -1,6 +1,33 @@
-﻿  session.cpp
+﻿  BankProtocol.cpp
   Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  boostTEST.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,1): warning C4305: '인수': 'const uint32_t'에서 'char'(으)로 잘립니다.
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,39): warning C4309: '인수': 상수 값이 잘립니다.
+  listener.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,1): warning C4305: '인수': 'const uint32_t'에서 'char'(으)로 잘립니다.
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(39,39): warning C4309: '인수': 상수 값이 잘립니다.
+  session.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  session_pool.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  코드를 생성하고 있습니다...
+C:\Users\31337\source\repos\bankserver\bankserver\listener.h(78): warning C4715: 'service::handle_client': 모든 제어 경로에서 값을 반환하지는 않습니다.
+C:\Users\31337\source\repos\bankserver\bankserver\BankProtocol.cpp(71): warning C4715: 'bank_network_methods::parse_data_buf_to_transaction': 모든 제어 경로에서 값을 반환하지는 않습니다.
   bankserver.vcxproj -> C:\Users\31337\source\repos\bankserver\Debug\bankserver.exe

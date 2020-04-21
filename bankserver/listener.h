@@ -13,7 +13,7 @@ class listener;
 
 class acceptor_ {
 public:
-	acceptor_(asio::io_context& ios, unsigned short port_number, vector<session_pool*> sp_);
+	acceptor_(asio::io_context& ios, string ip_addr, unsigned short port_number, vector<session_pool*> sp_);
 	void accept_();
 private:
 	asio::io_context& m_ios;
@@ -61,7 +61,8 @@ private:
 					session* clis = session::make_session(sp_->get_session_count() + 1, tc_csp, rand() % INT_MAX, 5, cli_ep);
 					sp_->add_session(*clis);
 					asio::write(*sock.get(), asio::buffer("queued"));
-					sock.get()->close();
+					sock.get()->shutdown(asio::socket_base::shutdown_both);
+					sock.get()->close();					
 					return req_byte;						
 				}
 			}			
@@ -80,9 +81,9 @@ private:
 class listener {
 public:
 	listener() : m_stop(false), pool_list(std::vector<session_pool*>()) {}
-	void listener_start(unsigned short port_number) {
-		m_thread.reset(new std::thread([this, port_number]() {
-			listener_run(port_number);
+	void listener_start(string ip_addr, unsigned short port_number) {
+		m_thread.reset(new std::thread([this, ip_addr, port_number]() {
+			listener_run(ip_addr, port_number);
 			}));
 	}
 	void listener_stop() {
@@ -93,8 +94,8 @@ public:
 		pool_list.push_back(sp_);
 	}
 private:
-	void listener_run(unsigned short port_number) {		
-		acceptor_ acptr(m_ios, port_number, pool_list);
+	void listener_run(string ip_addr, unsigned short port_number) {		
+		acceptor_ acptr(m_ios, ip_addr, port_number, pool_list);
 		while (!m_stop.load()) {
 			acptr.accept_();
 		}
