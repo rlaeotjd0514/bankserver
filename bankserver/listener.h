@@ -60,9 +60,9 @@ private:
 					cspinfo tc_csp = cspinfo(inquery_customer->pid, string((char*)inquery_customer->ppass));
 					session* clis = session::make_session(sp_->get_session_count() + 1, tc_csp, rand() % INT_MAX, 5, cli_ep);
 					sp_->add_session(*clis);
-					asio::write(*sock.get(), asio::buffer("queued"));
+					asio::write(*sock.get(), asio::buffer("queued"));					
 					sock.get()->shutdown(asio::socket_base::shutdown_both);
-					sock.get()->close();					
+					sock.get()->close();	
 					return req_byte;						
 				}
 			}			
