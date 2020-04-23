@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Diagnostics;
+using System.Threading;
 
 namespace bankUITester
 {
@@ -61,7 +63,7 @@ namespace bankUITester
 
             if (resv.Trim('\0') == "queued")
             {
-                MessageBox.Show("connecting to " + acport.ToString());
+                //MessageBox.Show("connecting to " + acport.ToString());                
                 clisock2.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), acport - 1));
                 MessageBox.Show("connection succeeded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }

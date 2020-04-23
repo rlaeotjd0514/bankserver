@@ -64,7 +64,7 @@ namespace bank_info_type {
 		}		
 
 		string printcspinfo() {
-			return cspass.c_str() + csid;
+			return cspass.c_str();
 		}
 	};
 

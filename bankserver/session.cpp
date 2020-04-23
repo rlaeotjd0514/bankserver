@@ -79,7 +79,7 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 
 	this->start_session_clock();
 	//handle client request...
-
+	
 	//handling request code;
 
 	//////////////////////////

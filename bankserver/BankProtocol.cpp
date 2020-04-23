@@ -12,14 +12,14 @@ using namespace chrono;
 namespace bank_network_methods {
 	///<summary>object to parse bytes -> cspinfo/tspfino</summary>
 	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len) {
-		uint16_t* version = (uint16_t*)buffer[0];
+		uint16_t* version = (uint16_t*)buffer;
 		if (*version != CURRENT_VERSION) return nullptr;
 		if (buffer[2] == TRANSACTION_TYPE_SEND) {
-			pinfo* spinfo_ = (pinfo*)buffer[3];
-			pinfo* rpinfo_ = (pinfo*)buffer[45];
-			uint32_t* amount = (uint32_t*)buffer[87];
-			time_point<system_clock>* req_t = (time_point<system_clock>*)buffer[119];
-			boost::asio::ip::tcp::endpoint * req_loc = (boost::asio::ip::tcp::endpoint*)buffer[127];
+			pinfo* spinfo_ = (pinfo*)(buffer+3);
+			pinfo* rpinfo_ = (pinfo*)(buffer+45);
+			uint32_t* amount = (uint32_t*)(buffer+87);
+			time_point<system_clock>* req_t = (time_point<system_clock>*)(buffer+119);
+			boost::asio::ip::tcp::endpoint * req_loc = (boost::asio::ip::tcp::endpoint*)(buffer+127);
 			return new transaction(transaction::t_type::send,
 				cspinfo(spinfo_->pid, string((char*)(spinfo_->ppass))),
 				cspinfo(rpinfo_->pid, string((char*)(rpinfo_->ppass))),
@@ -29,11 +29,11 @@ namespace bank_network_methods {
 			);
 		}
 		if (buffer[2] == TRANSACTION_TYPE_RECIEVE) {
-			pinfo* spinfo_ = (pinfo*)buffer[3];
-			pinfo* rpinfo_ = (pinfo*)buffer[45];
-			unsigned long long* amount = (unsigned long long*)buffer[87];
-			time_point<system_clock>* req_t = (time_point<system_clock>*)buffer[119];
-			boost::asio::ip::tcp::endpoint* req_loc = (boost::asio::ip::tcp::endpoint*)buffer[127];
+			pinfo* spinfo_ = (pinfo*)(buffer+3);
+			pinfo* rpinfo_ = (pinfo*)(buffer+45);
+			unsigned long long* amount = (unsigned long long*)(buffer+87);
+			time_point<system_clock>* req_t = (time_point<system_clock>*)(buffer+119);
+			boost::asio::ip::tcp::endpoint* req_loc = (boost::asio::ip::tcp::endpoint*)(buffer+127);
 			return new transaction(transaction::t_type::receive,
 				cspinfo(spinfo_->pid, string((char*)(spinfo_->ppass))),
 				cspinfo(rpinfo_->pid, string((char*)(rpinfo_->ppass))),
@@ -43,10 +43,10 @@ namespace bank_network_methods {
 			);
 		}
 		if (buffer[2] == TRANSACTION_TYPE_DEPOSIT) {
-			pinfo* rpinfo = (pinfo*)buffer[3];
-			uint32_t* amount = (uint32_t*)buffer[45];
-			time_point<system_clock>* req_t = (time_point<system_clock>*)buffer[77];
-			boost::asio::ip::tcp::endpoint* req_loc = (boost::asio::ip::tcp::endpoint*)buffer[85];
+			pinfo* rpinfo = (pinfo*)(buffer+3);
+			uint32_t* amount = (uint32_t*)(buffer+45);
+			time_point<system_clock>* req_t = (time_point<system_clock>*)(buffer+77);
+			boost::asio::ip::tcp::endpoint* req_loc = (boost::asio::ip::tcp::endpoint*)(buffer+85);
 			return new transaction(transaction::t_type::deposit,
 				cspinfo(rpinfo->pid, string((char*)rpinfo->ppass)),
 				csp_null,
@@ -56,10 +56,10 @@ namespace bank_network_methods {
 			);
 		}
 		if (buffer[2] == TRANSACTION_TYPE_WITHDRAW) {
-			pinfo* rpinfo = (pinfo*)buffer[3];
-			uint32_t* amount = (uint32_t*)buffer[45];
-			time_point<system_clock>* req_t = (time_point<system_clock>*)buffer[77];
-			boost::asio::ip::tcp::endpoint* req_loc = (boost::asio::ip::tcp::endpoint*)buffer[85];
+			pinfo* rpinfo = (pinfo*)(buffer+3);
+			uint32_t* amount = (uint32_t*)(buffer+45);
+			time_point<system_clock>* req_t = (time_point<system_clock>*)(buffer+77);
+			boost::asio::ip::tcp::endpoint* req_loc = (boost::asio::ip::tcp::endpoint*)(buffer+85);
 			return new transaction(transaction::t_type::withdraw,
 				cspinfo(rpinfo->pid, string((char*)rpinfo->ppass)),
 				csp_null,
