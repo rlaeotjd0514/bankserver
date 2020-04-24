@@ -21,7 +21,7 @@ session::session(uint32_t s_number_, cspinfo csp_, uint32_t secure_seed_, uint32
 	cli_socket(cli_socket_),
 	session_timer(HI_timer::timer_type::deadline, expire_time_, (long long)0,
 		[&]() {
-			this->change_validation();
+			//this->change_validation();
 			cout << "session have expired" << endl;			
 		}, []() {})	
 {				
@@ -35,9 +35,9 @@ session::session(const session& cp)
 	this->current_pool = cp.current_pool;
 	this->expire_time = cp.expire_time;	
 	this->secure_seed = cp.secure_seed;
-	this->session_expr = this->session_expr;
-	this->session_timer = this->session_timer;
-	this->session_number = this->session_number;
+	this->session_expr = cp.session_expr;
+	this->session_timer = cp.session_timer;
+	this->session_number = cp.session_number;
 }
 
 ///<summary>Returns session object pointer</summary>
@@ -56,7 +56,7 @@ void session::reset_session_clock() {
 }
 ///<summary>Add to session clocks remaining time</summary>
 void session::add_session_time(int add_time_) {
-	this->session_timer.add_to_left_time(add_time_);
+	this->session_timer.add_to_left_time(add_time_);	
 }
 
 ///<summary>Accept client connection request.
@@ -76,7 +76,7 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 		OutputDebugString(e.what());
 		cout << e.what() << endl;
 	}
-
+	
 	this->start_session_clock();
 	//handle client request...
 	
@@ -101,6 +101,10 @@ void session::change_validation() noexcept {
 ///<summary>Returns session validation</summary>
 bool session::check_session_validation() const {
 	return session_expr;
+}
+
+session::~session() {
+	cout << "session dtor called" << endl;
 }
 
 

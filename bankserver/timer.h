@@ -45,7 +45,7 @@ public :
 	///<br>self pointer is timer pointer, for saving the timer class values</br></summary>
 	void start(HI_timer * self) {		
 		auto& ths = *this;			
-		thd = thread([&ths](HI_timer * self_) {			
+		thd = thread([ths](HI_timer * self_) {			
 			future<void> fobj_ = self_->exit_signal.get_future();
 			while (self_->left_time > 0 && fobj_.wait_for(chrono::seconds(1)) == future_status::timeout) {											
 				self_->left_time -= 1;				
@@ -84,9 +84,9 @@ public :
 		this->current_type = rhs.current_type;
 		this->dcallback = rhs.dcallback;
 		this->duration = rhs.duration;
-		this->ecallback = rhs.ecallback;
-		this->left_time.store(rhs.left_time.load());
-		this->valid.store(rhs.left_time.load());
+		this->ecallback = rhs.ecallback;		
+		this->left_time = rhs.left_time.load();
+		this->valid = rhs.left_time.load();
 	}
 
 	void operator=(const HI_timer& rhs) {
@@ -94,8 +94,8 @@ public :
 		this->dcallback = rhs.dcallback;
 		this->duration = rhs.duration;
 		this->ecallback = rhs.ecallback;
-		this->left_time.store(rhs.left_time.load());
-		this->valid.store(rhs.left_time.load());
+		this->left_time = rhs.left_time.load();
+		this->valid = rhs.left_time.load();
 	}
 
 	HI_timer() {}

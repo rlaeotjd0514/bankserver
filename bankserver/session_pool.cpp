@@ -9,7 +9,7 @@ session_pool::session_pool():
 }
 
 ///<summary>add new sesion to session_list</summary>
-void session_pool::add_session(session s_) {
+void session_pool::add_session(session&& s_) {
 	session_list_value.push_back(s_);
 	s_.current_pool = this;
 	session_list.push_back(&(session_list_value.back()));
@@ -36,9 +36,10 @@ void session_pool::session_pool_start(future<void>& stop_ev_) {
 				auto cli_ep = session_ptr_->cli_socket;
 				//unsigned short port_num = session_ptr_->session_seed % 31337;					
 				mtx.unlock();
-				thread client_thread([=]() {					
-					tcp::socket client_handle = session_ptr_->accept_client(cli_ep);													
-				});							
+				thread client_thread([&]() {
+					tcp::socket client_handle = session_ptr_->accept_client(cli_ep);
+					//this_thread::sleep_for(std::chrono::seconds(session_ptr_->expire_time));
+				});
 				client_thread.detach();
 			}
 		}
