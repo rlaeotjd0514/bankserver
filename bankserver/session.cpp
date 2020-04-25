@@ -21,14 +21,14 @@ session::session(uint32_t s_number_, cspinfo csp_, uint32_t secure_seed_, uint32
 	cli_socket(cli_socket_),
 	session_timer(HI_timer::timer_type::deadline, expire_time_, (long long)0,
 		[&]() {
-			//this->change_validation();
+			this->change_validation();
 			cout << "session have expired" << endl;			
 		}, []() {})	
 {				
 	cout << "session ctor done" << endl;
 }
 
-session::session(const session& cp)
+session::session(const session& cp)//Aim not to use copy con
 {
 	this->cli_socket = cp.cli_socket;
 	this->current_customer = cp.current_customer;
@@ -43,6 +43,10 @@ session::session(const session& cp)
 ///<summary>Returns session object pointer</summary>
 session* session::make_session(uint32_t s_number_, cspinfo csp_, uint32_t secure_seed_, uint32_t expire_time_, tcp::endpoint cli_socket_) {
 	return new session(s_number_, csp_, secure_seed_, expire_time_, cli_socket_);
+}
+
+session* session::make_session(session && s_) {
+	return new session(s_.session_number, s_.current_customer, s_.secure_seed, s_.expire_time, s_.cli_socket);
 }
 
 ///<summary>Starts Session clock</summary>
@@ -78,10 +82,11 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 	}
 	
 	this->start_session_clock();
-	//handle client request...
-	
-	//handling request code;
-
+	//handle client request...		
+	this_thread::sleep_for(std::chrono::seconds(4));
+	cout << (this->check_session_validation() ? "true" : "false") << endl;
+	this_thread::sleep_for(std::chrono::seconds(2));
+	cout << (this->check_session_validation() ? "true" : "false") << endl;
 	//////////////////////////
 	return sock;//should be returning result.
 }
@@ -94,7 +99,7 @@ void session::expire_session() {
 ///<summary>Should not be used by lib user. Used on changing session validation.</summary>
 void session::change_validation() noexcept {
 	mtx.lock();
-	this->session_expr = !(this->session_expr);
+	session_expr = !session_expr;
 	mtx.unlock();
 }
 

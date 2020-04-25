@@ -24,6 +24,7 @@ public :
 	void add_session_time(int at);
 	tcp::socket accept_client(tcp::endpoint cli_ep);
 	static session* make_session(uint32_t s_number_, bank_info_type::cspinfo csp_, uint32_t secure_seed_, uint32_t expire_time_, tcp::endpoint cli_socket_);
+	static session* make_session(session && s_);
 	~session();
 private:
 	bool session_expr;

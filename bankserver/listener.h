@@ -55,10 +55,11 @@ private:
 				parse ended
 				*/
 				bank_query* bq = new bank_query();
-				if (bq->query_single_customer(*inquery_customer)) {
-					//세션을 만들고 / session_list 에 넣기
+				if (bq->query_single_customer(*inquery_customer)) {		
+					/*Create session and insert into session_pool cycle*/
 					cspinfo tc_csp = cspinfo(inquery_customer->pid, string((char*)inquery_customer->ppass));
 					session* clis = session::make_session(sp_->get_session_count() + 1, tc_csp, rand() % INT_MAX, 5, cli_ep);
+					/*clis will be only used as information trasporting instance (must create another class for this job, but not now)*/
 					sp_->add_session(std::move(*clis));
 					asio::write(*sock.get(), asio::buffer("queued"));	
 					delete clis;

@@ -31,16 +31,16 @@ void session_pool::session_pool_start(future<void>& stop_ev_) {
 			mtx.unlock();
 			if (sl_sz > 0) {
 				mtx.lock();
-				session* session_ptr_ = session_list.front();
+				session session_ptr_ = *(session_list.front());
 				session_list.pop_front();
-				auto cli_ep = session_ptr_->cli_socket;
+				auto cli_ep = session_ptr_.cli_socket;
 				//unsigned short port_num = session_ptr_->session_seed % 31337;					
 				mtx.unlock();
-				thread client_thread([&]() {
-					tcp::socket client_handle = session_ptr_->accept_client(cli_ep);
-					//this_thread::sleep_for(std::chrono::seconds(session_ptr_->expire_time));
-				});
-				client_thread.detach();
+				thread client_thread([=](session s_ptr_) {
+					auto com_session = session::make_session(std::move(s_ptr_));
+					tcp::socket client_handle = com_session->accept_client(cli_ep);									
+				}, session_ptr_);
+				client_thread.detach();//session_ptr_ deleted... context range out
 			}
 		}
 		cout << "session pool loop end" << endl;
