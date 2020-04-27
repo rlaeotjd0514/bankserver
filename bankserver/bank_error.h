@@ -10,9 +10,9 @@ namespace bank_error {
 }
 
 namespace bank_result {
-	typedef enum session_result {};
-	typedef enum transaction_result {};
-	typedef enum session_pool_result {};
-	typedef enum listener_result {};
-	typedef enum db_query_result {};
+	typedef enum session_result { success, failed, pending, unknown };
+	typedef enum transaction_result { success, failed, pending, unknown };
+	typedef enum session_pool_result { success, failed, pending, unknown };
+	typedef enum listener_result { success, failed, pending, unknown };
+	typedef enum db_query_result { success, failed, pending, unknown };
 }

@@ -74,4 +74,21 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\lib\x86\oraocci12.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\msvc\kpucb.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\msvc\oci.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\msvc\ociw32.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\msvc\oraocci12.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+  </ItemGroup>
 </Project>
