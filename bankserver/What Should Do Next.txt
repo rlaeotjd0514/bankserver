@@ -39,3 +39,6 @@ while (stop_ev_.wait_for(std::chrono::microseconds(100)) == std::future_status::
 [2020-04-26]
 0426~
 DB작업중...
+
+[2020-04-27]
+ORACLE LINUX 8 -> 18c 설치 및 Oracle Developer 연결 성공
