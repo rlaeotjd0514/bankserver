@@ -1,1 +1,1 @@
-﻿LINK : fatal error LNK1104: 'libboost_date_time-vc142-mt-gd-x32-1_72.lib' 파일을 열 수 없습니다.
+﻿  socket_tester.vcxproj -> C:\Users\31337\source\repos\bank\bankserver\Debug\socket_tester.exe

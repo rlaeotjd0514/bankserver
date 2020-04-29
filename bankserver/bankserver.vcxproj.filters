@@ -73,21 +73,78 @@
     <ClCompile Include="timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="db_query.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\lib\x86\oraocci12.lib">
+    <Library Include="..\lib\iconv.lib">
       <Filter>리소스 파일</Filter>
     </Library>
-    <Library Include="..\lib\msvc\kpucb.lib">
+    <Library Include="..\lib\libcrypto.lib">
       <Filter>리소스 파일</Filter>
     </Library>
-    <Library Include="..\lib\msvc\oci.lib">
+    <Library Include="..\lib\libecpg.lib">
       <Filter>리소스 파일</Filter>
     </Library>
-    <Library Include="..\lib\msvc\ociw32.lib">
+    <Library Include="..\lib\libecpg_compat.lib">
       <Filter>리소스 파일</Filter>
     </Library>
-    <Library Include="..\lib\msvc\oraocci12.lib">
+    <Library Include="..\lib\libintl.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libpgcommon.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libpgport.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libpgtypes.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libpq.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libssl.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libxml2.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\libxslt.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\postgres.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxbase28u.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxbase28u_net.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxbase28u_xml.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxmsw28u_adv.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxmsw28u_aui.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxmsw28u_core.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxmsw28u_html.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxmsw28u_stc.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\wxmsw28u_xrc.lib">
+      <Filter>리소스 파일</Filter>
+    </Library>
+    <Library Include="..\lib\zlib.lib">
       <Filter>리소스 파일</Filter>
     </Library>
   </ItemGroup>

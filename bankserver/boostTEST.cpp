@@ -7,7 +7,9 @@
 #include "session.h"
 #include "session_pool.h"
 #include "listener.h"
+#include "db_query.h"
 
+using namespace db_controller;
 using namespace std;
 using boost::asio::ip::tcp;
 using namespace boost::asio::chrono;
@@ -65,7 +67,9 @@ void c_test() {
 	cout << sizeof(chrono::time_point<system_clock>) << endl;	*/
 }
 
-void listener_test(string ip_a) {
+void listener_test() {
+	string ip_a;
+	cin >> ip_a;
 	listener l1;
 	session_pool * sp1 = new session_pool();
 	promise<void> stop_lebber;
@@ -77,10 +81,12 @@ void listener_test(string ip_a) {
 	l1.listener_stop();
 }
 
+void db_test() {
+	bank_query bq = bank_query();
+}
+
 int main() {	
-	string bind_s;
-	cin >> bind_s;
-	listener_test(bind_s);
+	db_test();
 	cout << "return to main" << endl;
 	return 0; 
 }

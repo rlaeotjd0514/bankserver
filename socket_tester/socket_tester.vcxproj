@@ -95,6 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\31337\Downloads\boost_1_72_0\boost_1_72_0\stage\lib\;C:\Users\31337\source\repos\bank\bankserver\lib\msvc\vc14\;C:\Users\31337\source\repos\bank\bankserver\lib\msvc\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
