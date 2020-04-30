@@ -54,8 +54,10 @@ private:
 				/*
 				parse ended
 				*/
-				bank_query* bq = new bank_query();
-				if (bq->query_single_customer(*inquery_customer)) {		
+				bank_query* bq = new bank_query("dbname=bankserver host=192.168.74.134 user=OKABE_RINTARO password=fhf10Rnfwoa");
+				auto qres = bq->query_single_customer(*inquery_customer);
+				cout << qres.what << endl;
+				if (qres.result == action_status::success) {		
 					/*Create session and insert into session_pool cycle*/
 					cspinfo tc_csp = cspinfo(inquery_customer->pid, string((char*)inquery_customer->ppass));
 					session* clis = session::make_session(sp_->get_session_count() + 1, tc_csp, rand() % INT_MAX, 5, cli_ep);

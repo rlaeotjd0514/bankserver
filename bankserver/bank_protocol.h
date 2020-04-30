@@ -16,7 +16,8 @@ namespace bank_network_methods {
 	constexpr uint32_t SGMK_BE = 0x53474D4B;
 	constexpr uint32_t MASK = 0xffffffff;
 
-	struct pinfo {	
+	#pragma pack(push, 1)
+	struct pinfo {		
 		uint8_t ppass[26];
 		unsigned long pid;
 	};
