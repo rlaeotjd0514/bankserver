@@ -18,7 +18,7 @@ namespace db_controller {
 		bank_query(const char * connection_string);
 		static bank_result test_db_connection();
 		static bank_result make_db_query(string connection_string);
-		bank_result query_single_customer(pinfo csp);
+		bank_result query_single_customer(pinfo csp);		
 		bank_result connection_test();
 		bank_result close();
 		bank_result connect();

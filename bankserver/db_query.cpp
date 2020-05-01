@@ -41,7 +41,7 @@ namespace db_controller {
 		stringstream query_;
 		uint8_t * csp_con = new uint8_t[27];
 		memcpy(csp_con, csp.ppass, 26);
-		csp_con[26] = '\0';		
+		csp_con[26] = '\0';
 		query_ << "select * from csptable where CID = " << csp.pid << " and CPASS = '" << csp_con << "'";		
 		string sres = query_.str();
 		PGresult* qres = PQexec(this->pconn, sres.data());
@@ -54,7 +54,8 @@ namespace db_controller {
 		else {
 			return bank_result{ "query failed", action_status::failed, result_type::db_query };
 		}
-	}
+	}	
+
 	bank_result bank_query::connection_test()
 	{
 		return bank_result();

@@ -69,6 +69,12 @@ private:
 					sock.get()->close();	
 					return req_byte;						
 				}
+				else {
+					asio::write(*sock.get(), asio::buffer("invalid client pass"));
+					sock->shutdown(boost::asio::socket_base::shutdown_type::shutdown_both);
+					sock->close();
+					return nullptr;
+				}
 				delete bq;
 			}			
 			/*std::string res((std::istreambuf_iterator<char>(&req)), std::istreambuf_iterator<char>());		
