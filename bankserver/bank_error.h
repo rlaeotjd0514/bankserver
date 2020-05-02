@@ -22,7 +22,6 @@ typedef enum class result_type {
 	db_query
 };
 
-
 struct bank_result {
 	string what;
 	action_status result;

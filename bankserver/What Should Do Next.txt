@@ -49,3 +49,6 @@ ORACLE LINUX 8 -> 18c 설치 및 Oracle Developer 연결 성공
 
 [2020-04-29]
 postgresql 연결 완료
+
+[2020-05-02]
+강원도 노예로 끌려감... 노트북은 가지고 감 그래도..
