@@ -15,6 +15,12 @@ namespace bank_info_type {
 		unsigned short second;
 	};
 
+	#pragma pack(push, 1)
+	struct pinfo {
+		uint8_t ppass[26];
+		unsigned long pid;
+	};
+
 	///<summary>client seed convert class::</summary>
 	class cspinfo {
 	private:
