@@ -17,6 +17,11 @@ void session_pool::add_session(session&& s_) {
 	///Therefore, we should create vector for storing the session value, and point the vector's tail. 
 }
 
+void session_pool::add_session(session * s_) {
+	s_->current_pool = this;
+	session_list.push_back(s_);	
+}
+
 ///<summary>get count of session_list</summary>
 int session_pool::get_session_count() const {
 	return session_list.size();
@@ -31,16 +36,16 @@ void session_pool::session_pool_start(future<void>& stop_ev_) {
 			mtx.unlock();
 			if (sl_sz > 0) {
 				mtx.lock();
-				session session_ptr_ = *(session_list.front());
+				session * session_ptr_ = session_list.front();
 				session_list.pop_front();
-				auto cli_ep = session_ptr_.cli_socket;
+				auto cli_ep = session_ptr_->cli_socket;
 				//unsigned short port_num = session_ptr_->session_seed % 31337;					
 				mtx.unlock();
-				thread client_thread([=](session s_ptr_) {
-					auto com_session = session::make_session(std::move(s_ptr_));
-					tcp::socket client_handle = com_session->accept_client(cli_ep);									
+				thread client_thread([=](session * s_ptr_) {					
+					tcp::socket client_handle = s_ptr_->accept_client(cli_ep);		
+					delete s_ptr_;
 				}, session_ptr_);
-				client_thread.detach();//session_ptr_ deleted... context range out
+				client_thread.detach();//session_ptr_ deleted... context range out				
 			}
 		}
 		cout << "session pool loop end" << endl;

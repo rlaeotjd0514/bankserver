@@ -71,7 +71,7 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 	boost::asio::io_service a_ios;
 	boost::asio::ip::tcp::socket sock(a_ios);
 	boost::asio::ip::tcp::acceptor gate = boost::asio::ip::tcp::acceptor(a_ios, tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), cli_ep.port() - 1));
-	try {
+	try {		
 		gate.listen();
 		gate.accept(sock);
 		cout << "client connection succeed::" << this->current_customer.printcspinfo() << endl;
@@ -83,10 +83,10 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 	
 	this->start_session_clock();
 	//handle client request...		
-	this_thread::sleep_for(std::chrono::seconds(4));
+	/*this_thread::sleep_for(std::chrono::seconds(4));
 	cout << (this->check_session_validation() ? "true" : "false") << endl;
 	this_thread::sleep_for(std::chrono::seconds(2));
-	cout << (this->check_session_validation() ? "true" : "false") << endl;
+	cout << (this->check_session_validation() ? "true" : "false") << endl;*/
 	//////////////////////////
 	return sock;//should be returning result.
 }
