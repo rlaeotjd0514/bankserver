@@ -3,7 +3,7 @@
 
 using namespace std;
 using namespace std::chrono;
-
+//abcdefghijklmnopqrstuvwxyz875770417
 namespace bank_info_type {	
 	///<summary>date class(not useing)</summary>
 	struct date {		

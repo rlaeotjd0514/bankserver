@@ -42,7 +42,8 @@ void session_pool::session_pool_start(future<void>& stop_ev_) {
 				//unsigned short port_num = session_ptr_->session_seed % 31337;					
 				mtx.unlock();
 				thread client_thread([=](session * s_ptr_) {					
-					tcp::socket client_handle = s_ptr_->accept_client(cli_ep);		
+					tcp::socket client_handle = s_ptr_->accept_client(cli_ep);	
+					s_ptr_->expire_session();					
 					delete s_ptr_;
 				}, session_ptr_);
 				client_thread.detach();//session_ptr_ deleted... context range out				

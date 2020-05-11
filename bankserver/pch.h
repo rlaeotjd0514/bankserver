@@ -1,5 +1,6 @@
 #pragma once
 #include <boost/asio.hpp>
+#include <boost/asio/deadline_timer.hpp>
 #include <cstdio>
 #include <thread>
 #include <atomic>

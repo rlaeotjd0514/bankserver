@@ -51,7 +51,7 @@ session* session::make_session(session && s_) {
 
 ///<summary>Starts Session clock</summary>
 void session::start_session_clock() {
-	this->session_timer.start(&(this->session_timer));
+	this->session_timer.start(&(this->session_timer));	
 }
 
 ///<summary>Reset session clock</summary>
@@ -69,25 +69,45 @@ void session::add_session_time(int add_time_) {
 tcp::socket session::accept_client(tcp::endpoint cli_ep)
 {	
 	boost::asio::io_service a_ios;
+	boost::asio::io_service dc;
 	boost::asio::ip::tcp::socket sock(a_ios);
 	boost::asio::ip::tcp::acceptor gate = boost::asio::ip::tcp::acceptor(a_ios, tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), cli_ep.port() - 1));
-	try {		
-		gate.listen();
+	boost::asio::deadline_timer accept_ternel = boost::asio::deadline_timer(dc);	
+	accept_ternel.expires_from_now(boost::posix_time::seconds(5));
+	accept_ternel.async_wait([&](const boost::system::error_code & ec) {
+		gate.cancel();
+		gate.close();
+	});	
+	thread th([&]() {
+		try {
+			dc.run();
+		}
+		catch (boost::system::error_code & ec) {}
+	});
+	th.detach();
+	try {				
 		gate.accept(sock);
+		accept_ternel.cancel();
+		if (!dc.stopped()) {
+			dc.stop();			
+		}		
 		cout << "client connection succeed::" << this->current_customer.printcspinfo() << endl;
+		this->start_session_clock();		
+		//handle client request...		
+		/*this_thread::sleep_for(std::chrono::seconds(4));
+		cout << (this->check_session_validation() ? "true" : "false") << endl;
+		this_thread::sleep_for(std::chrono::seconds(2));
+		cout << (this->check_session_validation() ? "true" : "false") << endl;*/
+		//////////////////////////
+		gate.close();
+		sock.shutdown(boost::asio::socket_base::shutdown_both);
+		sock.close();
 	}
 	catch (boost::system::system_error& e) {
 		OutputDebugString(e.what());
 		cout << e.what() << endl;
 	}
-	
-	this->start_session_clock();
-	//handle client request...		
-	/*this_thread::sleep_for(std::chrono::seconds(4));
-	cout << (this->check_session_validation() ? "true" : "false") << endl;
-	this_thread::sleep_for(std::chrono::seconds(2));
-	cout << (this->check_session_validation() ? "true" : "false") << endl;*/
-	//////////////////////////
+			
 	return sock;//should be returning result.
 }
 
@@ -109,6 +129,7 @@ bool session::check_session_validation() const {
 }
 
 session::~session() {
+	this->session_timer.set_left_time(0);
 	cout << "session dtor called" << endl;
 }
 

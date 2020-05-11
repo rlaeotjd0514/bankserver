@@ -46,7 +46,7 @@ namespace db_controller {
 		string sres = query_.str();
 		PGresult* qres = PQexec(this->pconn, sres.data());
 		if (PQstatus(this->pconn) == CONNECTION_BAD) {
-			return bank_result{ "connection failed", action_status::failed, result_type::db_query };
+			return bank_result{ "DB connection failed", action_status::failed, result_type::db_query };
 		}
 		if (PQntuples(qres) > 0) {
 			return bank_result{ PQgetvalue(qres, 0, 2), action_status::success, result_type::db_query };

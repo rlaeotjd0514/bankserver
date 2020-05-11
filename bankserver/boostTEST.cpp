@@ -85,7 +85,7 @@ void db_test() {
 	bank_query bq = bank_query("dbname=bankserver host=192.168.74.134 user=OKABE_RINTARO password=fhf10Rnfwoa");
 }
 
-int main() {	
+int main() {
 	listener_test();
 	cout << "return to main" << endl;
 	return 0; 
