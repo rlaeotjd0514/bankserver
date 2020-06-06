@@ -53,6 +53,7 @@
     <Text Include="전표내용정리.txt" />
     <Text Include="listener동작.txt" />
     <Text Include="What Should Do Next.txt" />
+    <Text Include="Type.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boostTEST.cpp">
@@ -67,13 +68,16 @@
     <ClCompile Include="listener.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BankProtocol.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="db_query.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="bank_protocol.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stringcontrol.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

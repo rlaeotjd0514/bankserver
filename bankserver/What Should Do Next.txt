@@ -11,7 +11,7 @@ while (stop_ev_.wait_for(std::chrono::microseconds(100)) == std::future_status::
 			session_list.pop_front(); ----- *
 			auto cli_ep = session_ptr_->cli_socket;
 			mtx.unlock();
-			tcp::socket client_handle = session_ptr_->accept_client(cli_ep);													
+			tcp::socket client_handle = session_ptr_->accept_client(cli_ep);
 		});							
 		client_thread.detach();
 	}

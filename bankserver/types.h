@@ -69,6 +69,15 @@ namespace bank_info_type {
 			cspass = cspass_;
 		}		
 
+		pinfo generate_pinfo() {
+			pinfo p_;
+			for (int i = 0; i < 26; i++) {
+				p_.ppass[i] = cspass[i];
+			}
+			p_.pid = csid;
+			return p_;
+		}
+
 		string printcspinfo() {
 			return cspass.c_str();
 		}
@@ -131,10 +140,10 @@ namespace bank_info_type {
 	class transaction {	
 	public:
 		enum class t_type { send, receive, deposit, withdraw, change_status};
-		transaction(transaction::t_type type, cspinfo s, cspinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
+		transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
   			transaction_type = type;
-			sender_ip = s;
-			receive_ip = r;
+			sender_ip = std::move(s);
+			receive_ip = std::move(r);
 			this->amount = amount;
 			this->location = loc;	
 			this->tsinfo = tspinfo();
@@ -144,8 +153,8 @@ namespace bank_info_type {
 	private:
 		tspinfo tsinfo;
 		t_type transaction_type;
-		cspinfo sender_ip;
-		cspinfo receive_ip;
+		pinfo sender_ip;
+		pinfo receive_ip;
 		std::chrono::time_point<system_clock> transaction_ctime;
 		std::chrono::time_point<system_clock> transaction_rtime;
 		boost::asio::ip::tcp::endpoint location;

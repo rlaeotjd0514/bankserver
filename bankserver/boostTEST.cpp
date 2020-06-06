@@ -2,12 +2,16 @@
 #include <iostream>
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/uuid/name_generator_sha1.hpp>
+#include <boost/format.hpp>
 #include <chrono>
 #include <string>
 #include "session.h"
 #include "session_pool.h"
 #include "listener.h"
 #include "db_query.h"
+#include <fstream>
+#include <sstream>
 
 using namespace db_controller;
 using namespace std;
@@ -15,10 +19,6 @@ using boost::asio::ip::tcp;
 using namespace boost::asio::chrono;
 
 //session_pool sp;
-
-void print(const boost::system::error_code&) {
-	std::cout << "Hello, world!" << endl;
-}
 
 //void session_test() {
 //	cspinfo * private_key = new cspinfo(1, "abcdefghijkemnopqrstuvwxyz");
@@ -86,7 +86,7 @@ void db_test() {
 }
 
 int main() {
-	listener_test();
+	listener_test();		
 	cout << "return to main" << endl;
 	return 0; 
 }

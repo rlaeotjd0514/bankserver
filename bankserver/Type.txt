@@ -1,0 +1,32 @@
+transaction objects are generated after any changes are made to server data.
+a. transaction class
+	1. transaction::t_type
+	-transaction type
+		i) send
+		-송금
+		ii) receive
+		-수금
+		iii) deposit
+		-예금
+		iv) withdraw
+		-출금
+		v) change_status
+		-관리자 전용 트랜잭션 테이블도 따로 생성됨. (현재는 개발하지 않으며 DB에서 직접 조작하여 사용함)
+	2. tspinfo
+	- transaction unique key for identification
+	3. pinfo sender_ip
+	- cspinfo data carrior (sender or subject)
+		i) ppass
+		::  26byte random string
+		ii) pid
+		:: random uint32_t
+	4. pinfo receive_ip
+	- cspinfo data carrior (receiver or object)
+	5. std::chrono::time_point<system_clock> transaction_ctime
+	- time the transaction was created
+	6. std::chrono::time_point<system_clock> transaction_rtime
+	- time the transaction request was received
+	7. boost::asio::ip::tcp::endpoint location
+	- ip information of requester
+	8. unsigned long long amount
+	- amount of change

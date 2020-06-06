@@ -7,16 +7,17 @@ using namespace bank_info_type;
 using namespace chrono;
 
 namespace bank_network_methods {	
-	constexpr auto CURRENT_VERSION = 0x01;
-	constexpr auto TRANSACTION_TYPE_SEND = 0x01;
-	constexpr auto TRANSACTION_TYPE_RECIEVE = 0x02;
-	constexpr auto TRANSACTION_TYPE_DEPOSIT = 0x03;
-	constexpr auto TRANSACTION_TYPE_WITHDRAW = 0x04;
+	constexpr uint8_t CURRENT_VERSION = 0x01;
+	constexpr uint8_t TRANSACTION_TYPE_SEND = 0x01;
+	constexpr uint8_t TRANSACTION_TYPE_RECIEVE = 0x02;
+	constexpr uint8_t TRANSACTION_TYPE_DEPOSIT = 0x03;
+	constexpr uint8_t TRANSACTION_TYPE_WITHDRAW = 0x04;
 	constexpr uint32_t SGMK_LE = 0x4B4D4753;
 	constexpr uint32_t SGMK_BE = 0x53474D4B;
 	constexpr uint32_t MASK = 0xffffffff;	
 
 	const cspinfo csp_null = cspinfo(0, "");
+	const pinfo p_null = pinfo{ { "", }, 0 };
 
 	///<summary>parse raw buffer to request transaction</summary>
 	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len);

@@ -63,6 +63,10 @@ void session::add_session_time(int add_time_) {
 	this->session_timer.add_to_left_time(add_time_);	
 }
 
+void send_cmplt_handler(const boost::system::error_code& error, size_t s) {
+	cout << "response complete";
+}
+
 ///<summary>Accept client connection request.
 ///this function remains block until client sends connection request
 ///</summary>
@@ -91,8 +95,10 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 		if (!dc.stopped()) {
 			dc.stop();			
 		}		
+		string server_response("Server's Response");
+		sock.async_send(boost::asio::buffer(server_response, server_response.length()), send_cmplt_handler);
 		cout << "client connection succeed::" << this->current_customer.printcspinfo() << endl;
-		this->start_session_clock();		
+		this->start_session_clock();
 		//handle client request...		
 		/*this_thread::sleep_for(std::chrono::seconds(4));
 		cout << (this->check_session_validation() ? "true" : "false") << endl;

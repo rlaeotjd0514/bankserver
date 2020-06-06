@@ -11,5 +11,12 @@ public:
 			s.replace(s.find(old_), sizeof(old_) - 1, new_);
 		}
 		return s;
+	}	
+};
+
+class stringconvertor {
+public:
+	static uint8_t* constchar_to_uint8array(const char* buf) {
+		return (uint8_t*)buf;
 	}
 };

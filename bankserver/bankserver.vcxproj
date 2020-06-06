@@ -151,16 +151,18 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="listener동작.txt" />
+    <Text Include="Type.txt" />
     <Text Include="What Should Do Next.txt" />
     <Text Include="전표내용정리.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BankProtocol.cpp" />
+    <ClCompile Include="bank_protocol.cpp" />
     <ClCompile Include="boostTEST.cpp" />
     <ClCompile Include="db_query.cpp" />
     <ClCompile Include="listener.cpp" />
     <ClCompile Include="session.cpp" />
     <ClCompile Include="session_pool.cpp" />
+    <ClCompile Include="stringcontrol.cpp" />
     <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
