@@ -12,7 +12,7 @@ using namespace chrono;
 namespace bank_network_methods {
 	///<summary>object to parse bytes -> cspinfo/tspfino</summary>
 	enum class jcode { empty };
-	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len) {
+	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len) {		
 		uint16_t* version = (uint16_t*)buffer;
 		if (*version != CURRENT_VERSION) return nullptr;
 		if (buffer[2] == TRANSACTION_TYPE_SEND) {
@@ -75,6 +75,38 @@ namespace bank_network_methods {
 				*req_t
 			);
 		}
+	}	
+
+	shared_ptr<transaction> generate_transaction(uint8_t* buffer, uint32_t len) {
+		transaction::t_type res_type = get_header_info(buffer, len);
+		if (res_type == transaction::t_type::none) throw new exception("Request Header is not valid!!");
+		uint8_t * bdp = parse_body(buffer, len);
+		if(bdp == nullptr) throw new exception("Body Signature is not valid!!"); //삭제 예정 (본문에는 시그니처같은거 필요 없음
+		switch (res_type) {
+			case transaction::t_type::send :
+				//pinfo* s =
+				break;
+			case transaction::t_type::receive :
+				break;
+			case transaction::t_type::deposit :
+				break;
+			case transaction::t_type::withdraw :
+				break;
+			default :
+				throw new exception("Undefined Job Code");
+		}
+
+		//return transaction::make_transaction();
+	}	
+	
+	transaction::t_type get_header_info(uint8_t* buffer, uint32_t len) {
+		//write code to get info about header infomation
+		return transaction::t_type::send;
+	}
+
+	uint8_t* parse_body(uint8_t* buffer, uint32_t len) {
+		//return packet body start pointer;
+		return nullptr;
 	}
 
 	///<summary>find SGMK mark on recieved packed</summary>

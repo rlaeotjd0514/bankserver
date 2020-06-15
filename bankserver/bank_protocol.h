@@ -20,7 +20,9 @@ namespace bank_network_methods {
 	const pinfo p_null = pinfo{ { "", }, 0 };
 
 	///<summary>parse raw buffer to request transaction</summary>
-	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len);
+	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len);	
+
+	shared_ptr<transaction> generate_transaction(uint8_t* buffer, uint32_t len);
 
 	///<summary>find SGMK mark on recieved packed</summary>
 	uint8_t* find_signature(uint8_t** buffer, uint32_t len);

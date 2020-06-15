@@ -18,7 +18,7 @@ namespace bank_info_type {
 	#pragma pack(push, 1)
 	struct pinfo {
 		uint8_t ppass[26];
-		unsigned long pid;
+		uint16_t pid;
 	};
 
 	///<summary>client seed convert class::</summary>
@@ -31,7 +31,7 @@ namespace bank_info_type {
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 			"abcdefghijklmnopqrstuvwxyz"
 			"0123456789";
-		const int passsize = 26;
+		const int passsize = 63;
 	public:
 		bool operator == (cspinfo& cspinfo_p) {
 			if (cspinfo_p.csid == this->csid && cspinfo_p.cspass == this->cspass) return true;
@@ -91,11 +91,11 @@ namespace bank_info_type {
 		bool random_authorized = false;
 		unsigned long tsid;
 		string tspass;
-		char rpool[63] =
+		char rpool[73] =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 			"abcdefghijklmnopqrstuvwxyz"
-			"0123456789";
-		const int passsize = 26;
+			"0123456789)!@#$%^&*(";
+		const int passsize = 73;
 	public:
 		bool operator == (tspinfo& tspinfo_p) {
 			if (tspinfo_p.tsid == this->tsid && tspinfo_p.tspass == this->tspass) return true;
@@ -139,7 +139,9 @@ namespace bank_info_type {
 	///<summary>transaction creator class</summary>
 	class transaction {	
 	public:
-		enum class t_type { send, receive, deposit, withdraw, change_status};
+		enum class t_type { none, send, receive, deposit, withdraw, change_status};
+		enum class t_status { none, created, pending, working, done };
+		enum class t_result { none, success, failed };
 		transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
   			transaction_type = type;
 			sender_ip = std::move(s);
@@ -150,15 +152,21 @@ namespace bank_info_type {
 			this->transaction_ctime = std::chrono::system_clock::now();
 			this->transaction_rtime = req_t;			
 		}
+		std::shared_ptr<transaction> make_transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
+			return make_shared<transaction>(type, s, r, amount, loc, req_t);
+		}
 	private:
 		tspinfo tsinfo;
 		t_type transaction_type;
+		t_status transaction_status;
+		t_result transaction_result;
 		pinfo sender_ip;
-		pinfo receive_ip;
+		pinfo receive_ip;		
 		std::chrono::time_point<system_clock> transaction_ctime;
 		std::chrono::time_point<system_clock> transaction_rtime;
+		std::chrono::time_point<system_clock> transaction_dtime;
 		boost::asio::ip::tcp::endpoint location;
-		unsigned long long amount;
+		unsigned long long amount;		
 	};
 
 	///<summary>transaction result class</summary>
