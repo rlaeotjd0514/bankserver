@@ -142,7 +142,7 @@ namespace bank_info_type {
 		enum class t_type { none, send, receive, deposit, withdraw, change_status};
 		enum class t_status { none, created, pending, working, done };
 		enum class t_result { none, success, failed };
-		transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
+		transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::detail::addrinfo_type loc, std::chrono::time_point<system_clock> req_t) {
   			transaction_type = type;
 			sender_ip = std::move(s);
 			receive_ip = std::move(r);
@@ -152,7 +152,7 @@ namespace bank_info_type {
 			this->transaction_ctime = std::chrono::system_clock::now();
 			this->transaction_rtime = req_t;			
 		}
-		std::shared_ptr<transaction> make_transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::ip::tcp::endpoint loc, std::chrono::time_point<system_clock> req_t) {
+		std::shared_ptr<transaction> static make_transaction(transaction::t_type type, pinfo s, pinfo r, unsigned long long amount, boost::asio::detail::addrinfo_type loc, std::chrono::time_point<system_clock> req_t) {
 			return make_shared<transaction>(type, s, r, amount, loc, req_t);
 		}
 	private:
@@ -165,7 +165,7 @@ namespace bank_info_type {
 		std::chrono::time_point<system_clock> transaction_ctime;
 		std::chrono::time_point<system_clock> transaction_rtime;
 		std::chrono::time_point<system_clock> transaction_dtime;
-		boost::asio::ip::tcp::endpoint location;
+		boost::asio::detail::addrinfo_type location;
 		unsigned long long amount;		
 	};
 

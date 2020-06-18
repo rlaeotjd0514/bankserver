@@ -6,7 +6,7 @@ using namespace std;
 using namespace bank_info_type;
 using namespace chrono;
 
-namespace bank_network_methods {	
+namespace bank_network_methods {
 	constexpr uint8_t CURRENT_VERSION = 0x01;
 	constexpr uint8_t TRANSACTION_TYPE_SEND = 0x01;
 	constexpr uint8_t TRANSACTION_TYPE_RECIEVE = 0x02;
@@ -18,6 +18,49 @@ namespace bank_network_methods {
 
 	const cspinfo csp_null = cspinfo(0, "");
 	const pinfo p_null = pinfo{ { "", }, 0 };
+
+	#pragma pack(push, 1)
+	struct csp_header {
+		uint8_t signature[4];
+		uint16_t protocol_version;
+		uint16_t inquiry_type;
+		uint8_t body_length[2];
+		uint8_t secret[4];
+		uint8_t footer[4];
+	};
+
+	#pragma pack(push, 1)
+	struct csp_body {
+		pinfo sender;
+		pinfo receiver;
+		uint64_t amount;
+		chrono::time_point<system_clock> req_time;
+		uint32_t req_loc;//parse uint32_t to sockaddr 200618
+	};
+	
+	#pragma pack(push, 1)
+	struct csp_packet {
+		csp_header header;
+		csp_body body;
+	};
+
+	class csp_packetC {
+	public:
+		csp_packetC() = delete;
+		csp_packetC(csp_header header, csp_body body) : header(header), body(body) {}
+
+		csp_header get_header() {
+			return header;
+		}
+
+		csp_body get_body() {
+			return body;
+		}
+
+	private:
+		csp_header header;
+		csp_body body;
+	};
 
 	///<summary>parse raw buffer to request transaction</summary>
 	transaction* parse_data_buf_to_transaction(uint8_t* buffer, uint32_t len);	
