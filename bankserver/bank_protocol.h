@@ -23,7 +23,7 @@ namespace bank_network_methods {
 	struct csp_header {
 		uint8_t signature[4];
 		uint16_t protocol_version;
-		uint16_t inquiry_type;
+		uint16_t inquiry_type;//*
 		uint8_t body_length[2];
 		uint8_t secret[4];
 		uint8_t footer[4];
@@ -31,9 +31,9 @@ namespace bank_network_methods {
 
 	#pragma pack(push, 1)
 	struct csp_body {
-		pinfo sender;
-		pinfo receiver;
-		uint64_t amount;
+		pinfo sender;//*
+		pinfo receiver;//*
+		uint64_t amount;//*
 		chrono::time_point<system_clock> req_time;
 		uint32_t req_loc;//parse uint32_t to sockaddr 200618
 	};

@@ -27,11 +27,11 @@ namespace bank_info_type {
 		bool random_authorized = false;
 		unsigned long csid;
 		string cspass;
-		char rpool[63] =
+		char rpool[73] =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 			"abcdefghijklmnopqrstuvwxyz"
-			"0123456789";
-		const int passsize = 63;
+			"0123456789)!@#$%^&*(";
+		const int passsize = 73;
 	public:
 		bool operator == (cspinfo& cspinfo_p) {
 			if (cspinfo_p.csid == this->csid && cspinfo_p.cspass == this->cspass) return true;
