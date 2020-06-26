@@ -70,10 +70,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\31337\Downloads\boost_1_72_0\boost_1_72_0\;C:\Users\31337\source\repos\bank\bankserver\;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dskim\Downloads\boost_1_72_0\boost_1_72_0\;C:\Users\dskim\source\repos\bank\bankserver\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\31337\Downloads\boost_1_72_0\boost_1_72_0\;C:\Users\31337\source\repos\bank\bankserver\include\;C:\Users\31337\Downloads\postgresql-10.12-3-windows-x64-binaries\pgsql\bin;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\dskim\Downloads\boost_1_73_0\boost_1_73_0;C:\Users\dskim\source\repos\bank\bankserver\include\;C:\Users\dskim\Downloads\postgresql-10.12-3-windows-x64-binaries\pgsql\bin;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -81,11 +81,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\31337\source\repos\bank\bankserver\include\;C:\Users\31337\source\repos\bank\bankserver\lib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\dskim\source\repos\bank\bankserver\include\;C:\Users\dskim\source\repos\bank\bankserver\lib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\31337\Downloads\boost_1_72_0\boost_1_72_0\stage\lib\;C:\Users\31337\source\repos\bank\bankserver\lib\;C:\Users\31337\source\repos\bank\bankserver\include\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\dskim\Downloads\boost_1_72_0\boost_1_72_0\stage\lib\;C:\Users\dskim\source\repos\bank\bankserver\lib\;C:\Users\dskim\source\repos\bank\bankserver\include\</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;iconv.lib;libcrypto.lib;libecpg.lib;libecpg_compat.lib;libintl.lib;libpgcommon.lib;libpgport.lib;libpgtypes.lib;libpq.lib;libssl.lib;libxml2.lib;libxslt.lib;postgres.lib;wxbase28u.lib;wxbase28u_net.lib;wxbase28u_xml.lib;wxmsw28u_adv.lib;wxmsw28u_aui.lib;wxmsw28u_core.lib;wxmsw28u_html.lib;wxmsw28u_stc.lib;wxmsw28u_xrc.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -99,11 +99,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\31337\Downloads\boost_1_72_0\boost_1_72_0\;C:\Users\31337\source\repos\bank\bankserver\;C:\Users\31337\Downloads\postgresql-10.12-3-windows-x64-binaries\pgsql\bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\dskim\Downloads\boost_1_72_0\boost_1_72_0\;C:\Users\dskim\source\repos\bank\bankserver\;C:\Users\dskim\Downloads\postgresql-10.12-3-windows-x64-binaries\pgsql\bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\31337\source\repos\bank\bankserver\lib\;C:\Users\31337\Downloads\boost_1_72_0\boost_1_72_0\stage\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\dskim\source\repos\bank\bankserver\lib\;C:\Users\dskim\Downloads\boost_1_73_0\boost_1_73_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -25,7 +25,7 @@ namespace bank_info_type {
 	class cspinfo {
 	private:
 		bool random_authorized = false;
-		unsigned long csid;
+		unsigned long long csid;
 		string cspass;
 		char rpool[73] =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"

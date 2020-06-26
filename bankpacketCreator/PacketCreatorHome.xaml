@@ -40,7 +40,7 @@
         <Border Grid.Column="3" Grid.Row="3" Height="35" Padding="5" Background="#4E87D4" VerticalAlignment="Top">
             <Label VerticalAlignment="Center"  HorizontalAlignment="Center" Foreground="White">Amount</Label>
         </Border>
-        <ListBox Name="jList" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
+        <ListBox Name="jList" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" SelectionChanged="JobSelection" SelectedIndex="0">
             <ListBoxItem>Send</ListBoxItem>
             <ListBoxItem>Receive</ListBoxItem>
             <ListBoxItem>Deposit</ListBoxItem>
