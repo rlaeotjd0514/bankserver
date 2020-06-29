@@ -43,10 +43,14 @@ namespace bankUITester
 
         private void sendbutton_Click(object sender, EventArgs e)
         {
+            string cpass = SendBodyBox.Text.Substring(0, 26);
+            UInt64 cid_s = Convert.ToUInt64(SendBodyBox.Text.Substring(27));
             byte[] msg = new byte[SendBodyBox.Text.Length + 4];
-            byte[] CidByteTray = BitConverter.GetBytes(Convert.ToInt16(SendBodyBox.Text));
+            byte[] CpassByteTray = ASCIIEncoding.ASCII.GetBytes(cpass);            
+            byte[] CidByteTray = BitConverter.GetBytes(cid_s);
             Buffer.BlockCopy(SGMK_LE, 0, msg, 0, SGMK_LE.Length);
-            Buffer.BlockCopy(CidByteTray, 0, msg, SGMK_LE.Length, CidByteTray.Length);
+            Buffer.BlockCopy(CpassByteTray, 0, msg, SGMK_LE.Length, CidByteTray.Length);
+            Buffer.BlockCopy(CidByteTray, 0, msg, SGMK_LE.Length + CidByteTray.Length, CpassByteTray.Length);
             clisock1.Send(msg);
 
             byte[] res = new byte[255];

@@ -18,7 +18,7 @@ namespace bank_info_type {
 	#pragma pack(push, 1)
 	struct pinfo {
 		uint8_t ppass[26];
-		uint16_t pid;
+		uint64_t pid;
 	};
 
 	///<summary>client seed convert class::</summary>
@@ -56,7 +56,7 @@ namespace bank_info_type {
 		cspinfo() {
 			string pass;
 			srand((unsigned int)time(0));
-			this->csid = rand() % LONG_MAX;
+			this->csid = rand() % ULLONG_MAX;
 			for (int i = 0; i < passsize; i++) {
 				pass += rpool[rand() % sizeof(rpool)];
 			}

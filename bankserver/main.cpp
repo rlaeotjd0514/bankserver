@@ -82,11 +82,13 @@ void listener_test() {
 }
 
 void db_test() {
-	bank_query bq = bank_query("dbname=bankserver host=192.168.74.134 user=OKABE_RINTARO password=fhf10Rnfwoa");
+	bank_query bq = bank_query("dbname=CSPDB host=192.168.91.128 user=OKABE_RINTARO password=fhf10Rnfwoa");
+	bq.test_db_connection();
 }
 
 int main() {
-	listener_test();		
+	db_test();
+	//listener_test();		
 	cout << "return to main" << endl;
 	return 0; 
 }

@@ -8,7 +8,7 @@ namespace db_controller {
 	}
 	bank_result bank_query::test_db_connection()
 	{
-		PGconn* pconn = PQconnectdb("dbname=bankserver host=192.168.74.134 user=OKABE_RINTARO password=fhf10Rnfwoa");
+		PGconn* pconn = PQconnectdb("dbname=CSPDB host=192.168.91.128 user=OKABE_RINTARO password=fhf10Rnfwoa");
 		if (PQstatus(pconn) == CONNECTION_BAD) {
 			cout << "Connection Failed due to unknown reason";
 			//return error code

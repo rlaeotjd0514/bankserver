@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.XPath;
 using System.Net;
+using System.Runtime.InteropServices;
 
 namespace bankpacketCreator
 {
@@ -26,11 +27,15 @@ namespace bankpacketCreator
     public partial class PacketCreatorHome : Page
     {
         UInt64 amount = 0;
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct pinfo
         {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 26)]
             public byte[] ppass;
+            [MarshalAs(UnmanagedType.U8)]
             public UInt64 pid;
         };
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct csp_header
         {
             public UInt32 signature;
@@ -40,15 +45,18 @@ namespace bankpacketCreator
             public UInt32 secret;
             public UInt32 footer;
         };
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct csp_body
         {
-            public pinfo sender;//*
-            public pinfo receiver;//*
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 34)]
+            public byte[] sender;//*
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 34)]
+            public byte[] receiver;//*
             public UInt64 amount;//*
             public UInt64 time_null;
             public UInt32 req_loc;//parse uint32_t to sockaddr 200618
         };
-
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct csp_packet
         {
             public csp_header header;
@@ -60,10 +68,10 @@ namespace bankpacketCreator
         UInt16 protocolVersion = 0x01;
         UInt32 packet_secret;
         const UInt32 P_headersig = 0x4944554A;
-        const UInt32 P_headerfoot = 0x53455952;
+        const UInt32 P_headerfooter = 0x53455952;
 
         pinfo cspsender, cspreceiver;
-        int jcode = -1;
+        ushort jcode = ushort.MaxValue;
         bool cspsender_ch = false;
         bool cspreceiver_ch = false;
         bool amount_ch = false;
@@ -164,9 +172,17 @@ namespace bankpacketCreator
 
         private void CspReceiverBoxUp(object sender, RoutedEventArgs e)
         {
-            if(CspReceiveTextBox.Text == "Csp Receiver")
+            if (CspReceiveTextBox.Text == "Csp Receiver")
             {
-                CspReceiveTextBox.Text = "";                
+                CspReceiveTextBox.Text = "";
+            }
+        }
+
+        private void CspReceiverTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (CspReceiveTextBox.Text == "Csp Receiver")
+            {
+                CspReceiveTextBox.Text = "";
             }
             else
             {
@@ -181,30 +197,22 @@ namespace bankpacketCreator
                         if (!char.IsDigit(CspReceiveTextBox.Text[i]))
                         {
                             MessageBox.Show("Receiver Csp information is not valid!");
-                            CspSendTextBox.Text = "Csp Receiver";
+                            CspReceiveTextBox.Text = "Csp Receiver";
                             return;
                         }
                         cspreceiver.pid *= 10;
                         cspreceiver.pid += Convert.ToUInt64(CspReceiveTextBox.Text[i]) - 48;
                     }
-                    cspsender_ch = true;
+                    cspreceiver_ch = true;
                 }
                 else
                 {
                     MessageBox.Show("CSP information length should be more then 26 char.");
-                    CspSendTextBox.Text = "Csp Sender";
-                    cspsender_ch = false;
+                    CspReceiveTextBox.Text = "Csp Sender";
+                    cspreceiver_ch = false;
                     return;
                 }
-            }
-        }
-
-        private void CspReceiverTextBoxLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (CspReceiveTextBox.Text == "")
-            {
-                CspReceiveTextBox.Text = "Csp Receiver";
-            }
+            }            
         }
 
         const UInt64 u64max = UInt64.MaxValue;
@@ -214,17 +222,43 @@ namespace bankpacketCreator
 
         private void JobSelection(object sender, SelectionChangedEventArgs e)
         {
-            jcode = jList.SelectedIndex;
+            if(jList.SelectedIndex == -1)
+            {
+                jcode = ushort.MaxValue;
+            }
+            else
+            {
+                jcode = (ushort)jList.SelectedIndex;
+            }
         }
 
-        UInt32 FindCurrentLocation()
+        byte[] FindCurrentLocation()
         {
-            socket
+            IPHostEntry server = Dns.GetHostEntry(Dns.GetHostName());
+            foreach(var ip in server.AddressList)
+            {
+                if(ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.GetAddressBytes();
+                }
+            }
+            return null;
         }
+
+        static byte[] CreatePacketByteArray<T>(T p)
+        {
+            int size = Marshal.SizeOf(p);
+            byte[] arr = new byte[size];
+            IntPtr p_ = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(p, p_, true);
+            Marshal.Copy(p_, arr, 0, size);
+            Marshal.FreeHGlobal(p_);
+            return arr;
+        }        
 
         private void GenerateButtonClick(object sender, RoutedEventArgs e)
         {
-            if(jcode == -1)
+            if(jcode == ushort.MaxValue)
             {
                 MessageBox.Show("Please choice job code");
                 return;
@@ -235,17 +269,22 @@ namespace bankpacketCreator
                 return;
             }
             
-            csp_packet p1;
-            p1.body.sender = cspsender;
-            p1.body.receiver = cspreceiver;
+            csp_packet p1 = new csp_packet();
+            p1.body.sender = CreatePacketByteArray<pinfo>(cspsender);
+            p1.body.receiver = CreatePacketByteArray<pinfo>(cspreceiver);
             p1.body.amount = amount;
-            p1.body.req_loc
+            p1.body.req_loc = BitConverter.ToUInt32(FindCurrentLocation(), 0);
+
             p1.header.signature = 0x4944554A;
             p1.header.protocol_version = 0x01;
-            p1.header.inquiry_type = jcode;
-            p1.header.
-            
-            byte[] packet_bytes = BitConverter.GetBytes
+            p1.header.inquiry_type = (ushort)(jcode + 1);
+            p1.header.body_length = (UInt16)body_size;
+            p1.header.secret = (uint)(new Random().Next(1 << 30)) << 2 | (uint)(new Random().Next(1 << 2));
+            p1.header.footer = P_headerfooter;
+
+            byte[] packet_bytes = CreatePacketByteArray<csp_packet>(p1);
+            ResultBox.Document.Blocks.Clear();
+            ResultBox.Document.Blocks.Add(new Paragraph(new Run(BitConverter.ToString(packet_bytes))));
         }
     }
 }

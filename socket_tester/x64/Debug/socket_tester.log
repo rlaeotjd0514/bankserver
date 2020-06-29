@@ -1,1 +1,2 @@
-﻿  socket_tester.vcxproj -> C:\Users\31337\source\repos\bank\bankserver\x64\Debug\socket_tester.exe
+﻿  socket_tester.cpp
+C:\Users\dskim\source\repos\bank\bankserver\socket_tester\socket_tester.cpp(5,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'boost/asio.hpp': No such file or directory
