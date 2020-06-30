@@ -17,12 +17,16 @@ namespace bank_network_methods {
 	constexpr uint32_t P_headersig = 0x4944554A;
 	constexpr uint32_t P_headerfoot = 0x53455952;	
 	constexpr uint32_t MASK = 0xffffffff;
+	constexpr uint32_t pinfo_size = 34;
+	constexpr uint32_t csp_header_size = 18;
+	constexpr uint32_t csp_body_size = pinfo_size * 2 + 4 + 8 + 4;
+	constexpr uint32_t csp_packet_size = csp_header_size + csp_body_size;
 
 	const cspinfo csp_null = cspinfo(0, "");
-	const pinfo p_null = pinfo{ { "", }, 0 };
+	const pinfo p_null = pinfo{ { "", }, 0 };	
 
 	#pragma pack(push, 1)
-	struct csp_header {
+	struct csp_header {//4 + 2 + 2 + 2 + 4 + 4
 		uint8_t signature[4];
 		uint16_t protocol_version;
 		uint16_t inquiry_type;//*
@@ -36,7 +40,7 @@ namespace bank_network_methods {
 		pinfo sender;//*
 		pinfo receiver;//*
 		uint64_t amount;//*
-		chrono::time_point<system_clock> req_time;
+		chrono::time_point<system_clock> req_time;//should be replace with explicit type
 		uint32_t req_loc;//parse uint32_t to sockaddr 200618
 	};
 	

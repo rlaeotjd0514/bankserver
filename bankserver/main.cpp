@@ -87,8 +87,8 @@ void db_test() {
 }
 
 int main() {
-	db_test();
-	//listener_test();		
+	//db_test();
+	listener_test();		
 	cout << "return to main" << endl;
 	return 0; 
 }

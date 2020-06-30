@@ -1,18 +1,7 @@
-﻿  main.cpp
+﻿  session.cpp
   Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
   - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
   - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(4,30): warning C4091: 'typedef ': 변수를 선언하지 않으면 'session_error' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(5,34): warning C4091: 'typedef ': 변수를 선언하지 않으면 'transaction_error' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(6,35): warning C4091: 'typedef ': 변수를 선언하지 않으면 'session_pool_error' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(7,31): warning C4091: 'typedef ': 변수를 선언하지 않으면 'listener_error' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(8,31): warning C4091: 'typedef ': 변수를 선언하지 않으면 'db_query_error' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(10,72): warning C4091: 'typedef ': 변수를 선언하지 않으면 'session_result' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(11,76): warning C4091: 'typedef ': 변수를 선언하지 않으면 'transaction_result' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(12,77): warning C4091: 'typedef ': 변수를 선언하지 않으면 'session_pool_result' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(13,73): warning C4091: 'typedef ': 변수를 선언하지 않으면 'listener_result' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(14,73): warning C4091: 'typedef ': 변수를 선언하지 않으면 'db_query_result' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(16,71): warning C4091: 'typedef ': 변수를 선언하지 않으면 'action_status' 왼쪽은 무시됩니다.
-C:\Users\dskim\source\repos\bank\bankserver\bankserver\bank_error.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'result_type' 왼쪽은 무시됩니다.
+C:\Users\dskim\source\repos\bank\bankserver\bankserver\session.cpp(91,38): warning C4101: 'ec' :참조되지 않은 지역 변수입니다.
   bankserver.vcxproj -> C:\Users\dskim\source\repos\bank\bankserver\x64\Debug\bankserver.exe

@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "session.h"
+#include "bank_protocol.h"
 
 using namespace std;
+using namespace bank_network_methods;
 
 ///<summary>Session is used when actual communication is happening with client.
 ///<para>s_number : not used </para>
@@ -51,7 +53,7 @@ session* session::make_session(session && s_) {
 
 ///<summary>Starts Session clock</summary>
 void session::start_session_clock() {
-	this->session_timer.start(&(this->session_timer));	
+	this->session_timer.start(&(this->session_timer));
 }
 
 ///<summary>Reset session clock</summary>
@@ -94,17 +96,26 @@ tcp::socket session::accept_client(tcp::endpoint cli_ep)
 		accept_ternel.cancel();
 		if (!dc.stopped()) {
 			dc.stop();			
-		}		
+		}
+
+		uint8_t* packet_buf = new uint8_t[csp_packet_size];		
+		sock.receive(boost::asio::buffer(packet_buf, csp_packet_size));
+		csp_packet* packet_p = (csp_packet*)packet_buf;
+
 		string server_response("Server's Response");
 		sock.async_send(boost::asio::buffer(server_response, server_response.length()), send_cmplt_handler);
 		cout << "client connection succeed::" << this->current_customer.printcspinfo() << endl;
 		this->start_session_clock();
-		//handle client request...		
+
+		//handle client request...
+
+		
+
 		/*this_thread::sleep_for(std::chrono::seconds(4));
 		cout << (this->check_session_validation() ? "true" : "false") << endl;
 		this_thread::sleep_for(std::chrono::seconds(2));
 		cout << (this->check_session_validation() ? "true" : "false") << endl;*/
-		//////////////////////////
+		
 		gate.close();
 		sock.shutdown(boost::asio::socket_base::shutdown_both);
 		sock.close();

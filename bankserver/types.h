@@ -122,7 +122,7 @@ namespace bank_info_type {
 		tspinfo() {
 			string pass;
 			srand((unsigned int)time(0));
-			this->tsid = rand() % ULONG_MAX;
+			this->tsid = rand() % ULLONG_MAX;
 			for (int i = 0; i < passsize; i++) {
 				pass += rpool[rand() % sizeof(rpool)];
 			}

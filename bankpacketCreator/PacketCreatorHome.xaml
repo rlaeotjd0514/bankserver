@@ -76,7 +76,7 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Button Grid.Column="4" Grid.Row="5" HorizontalAlignment="Center" Click="GenerateButtonClick" Margin="0,5,0,0">
+        <Button Grid.Column="4" Grid.Row="5" HorizontalAlignment="Center" Click="GenerateButtonClick" Margin="337,5,10,0">
             Generate
         </Button>
         <RichTextBox x:Name="ResultBox" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Height="50" Grid.RowSpan="2">

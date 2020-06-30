@@ -30,7 +30,7 @@ uint8_t* service::handle_client(std::shared_ptr<asio::ip::tcp::socket> sock, ses
 			/*
 			parse ended
 			*/
-			bank_query* bq = new bank_query("dbname=bankserver host=192.168.74.134 user=OKABE_RINTARO password=fhf10Rnfwoa");
+			bank_query* bq = new bank_query("dbname=CSPDB host=192.168.91.128 user=OKABE_RINTARO password=fhf10Rnfwoa");
 			auto qres = bq->query_single_customer(*inquery_customer);
 			cout << qres.what << endl;
 			if (qres.result == action_status::success) {

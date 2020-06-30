@@ -42,7 +42,7 @@ namespace db_controller {
 		uint8_t * csp_con = new uint8_t[27];
 		memcpy(csp_con, csp.ppass, 26);
 		csp_con[26] = '\0';
-		query_ << "select * from csptable where CID = " << csp.pid << " and CPASS = '" << csp_con << "'";		
+		query_ << "select * from csptable where CID = " << (long long)csp.pid << " and CPASS = '" << csp_con << "'";		
 		string sres = query_.str();
 		PGresult* qres = PQexec(this->pconn, sres.data());
 		if (PQstatus(this->pconn) == CONNECTION_BAD) {
